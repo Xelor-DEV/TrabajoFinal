@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 828289933895867242}
   - component: {fileID: 6037080618053707468}
   - component: {fileID: 7608389226156000675}
+  - component: {fileID: 3630510087322696577}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Peashooter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2615711858997901084}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.83, y: 0.71, z: 2.35}
+  m_LocalPosition: {x: 4.9982862, y: -3.7942358e-17, z: 1.708772}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -105,3 +106,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3630510087322696577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2615711858997901084}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b12e2a959878214cacd65623dc29341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

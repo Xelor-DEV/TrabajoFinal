@@ -78,7 +78,6 @@ public class DoubleLinkedCircularList<T>
         }
         count = count + 1;
     }
-
     public void InsertNodeAtPosition(T value, int position)
     {
         if (position == 0)
@@ -209,6 +208,34 @@ public class DoubleLinkedCircularList<T>
             }
             return tmp.Value;
         }
+    }
+    public T[] GetNodesInRange(int start, int end)
+    {
+        if (start < 0 || end >= count)
+        {
+            throw new IndexOutOfRangeException("Las posiciones deben estar dentro del rango de la lista.");
+        }
+
+        if (start > end)
+        {
+            throw new ArgumentException("La posición inicial debe ser menor o igual a la posición final.");
+        }
+
+        T[] nodesInRange = new T[end - start + 1];
+        Node current = head;
+        int index = 0;
+        while (index < start)
+        {
+            current = current.Next;
+            index = index + 1;
+        }
+        for (int i = 0; i < nodesInRange.Length; ++i)
+        {
+            nodesInRange[i] = current.Value;
+            current = current.Next;
+        }
+
+        return nodesInRange;
     }
     public void DeleteNodeAtStart()
     {

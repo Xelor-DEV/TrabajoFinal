@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
-[CreateAssetMenu(fileName = "RobotIcon", menuName = "ScriptableObjects/UI/RobotIcon", order = 1)]
+[CreateAssetMenu(fileName = "RobotCard", menuName = "ScriptableObjects/UI/RobotCard", order = 1)]
 public class RobotCard : ScriptableObject
 {
-    [SerializeField] private Image robotIcon;
-    public Image RobotIcon
+    [SerializeField] private Sprite robotIcon;
+    public Sprite RobotIcon
     {
         get
         {
@@ -49,6 +49,18 @@ public class RobotCard : ScriptableObject
         set
         {
             damage = value;
+        }
+    }
+    [SerializeField] private GameObject robotPrefab;
+    public GameObject RobotPrefab
+    {
+        get
+        {
+            return robotPrefab;
+        }
+        set
+        {
+            robotPrefab = value;
         }
     }
 }

@@ -8,14 +8,18 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private int currentPage;
     [SerializeField] private int robotsPerPage;
     [SerializeField] private int totalPages;
-    public Action OnInventoryUpdated;
-
+    public Action<int> OnInventoryUpdated;
+    public RobotCard[] DisplayedRobots
+    {
+        get
+        {
+            return displayedRobots;
+        }
+    }
     void Start()
     {
         displayedRobots = new RobotCard[robotsPerPage];
-        UpdateDisplayedRobots();
     }
-
     public void AddRobot(RobotCard newRobot)
     {
         robotList.InsertNodeAtEnd(newRobot);
@@ -25,16 +29,18 @@ public class PlayerInventory : MonoBehaviour
         }
         UpdateDisplayedRobots();
     }
-
-    public void RemoveRobot(RobotCard robot)
+    public void RemoveRobot(int index)
     {
-        int position = FindRobotPosition(robot);
-        if (position != -1)
+        if (index < 0 || index >= robotList.Count)
         {
-            robotList.DeleteNodeAtPosition(position);
+            throw new IndexOutOfRangeException("Índice fuera de rango");
+        }
+        else
+        {
+            robotList.DeleteNodeAtPosition(index);
             if (robotList.Count <= robotsPerPage * (totalPages - 1) && totalPages > 1)
             {
-                totalPages--;
+                totalPages = totalPages - 1;
             }
             if (currentPage > totalPages - 1 && currentPage != 0)
             {
@@ -43,7 +49,6 @@ public class PlayerInventory : MonoBehaviour
             UpdateDisplayedRobots();
         }
     }
-
     public void NextPage()
     {
         if (currentPage == totalPages - 1)
@@ -56,7 +61,6 @@ public class PlayerInventory : MonoBehaviour
         }
         UpdateDisplayedRobots();
     }
-
     public void PreviousPage()
     {
         if (currentPage == 0)
@@ -69,33 +73,23 @@ public class PlayerInventory : MonoBehaviour
         }
         UpdateDisplayedRobots();
     }
-
-    private void UpdateDisplayedRobots()
+    public void UpdateDisplayedRobots()
     {
-        int start = currentPage * robotsPerPage;
-        for (int i = 0; i < robotsPerPage; ++i)
+        if (robotList.Count == 0)
         {
-            if (start + i < robotList.Count)
-            {
-                displayedRobots[i] = robotList.GetNodeAtPosition(start + i);
-            }
-            else
-            {
-                displayedRobots[i] = null;
-            }
+            displayedRobots = new RobotCard[0];
+            OnInventoryUpdated?.Invoke(0);
         }
-        OnInventoryUpdated?.Invoke();
-    }
-
-    private int FindRobotPosition(RobotCard robot)
-    {
-        for (int i = 0; i < robotList.Count; i++)
+        else
         {
-            if (robotList.GetNodeAtPosition(i) == robot)
+            int start = currentPage * robotsPerPage;
+            int end = Mathf.Min(start + robotsPerPage, robotList.Count) - 1;
+            if (start > end)
             {
-                return i;
+                start = end;
             }
+            displayedRobots = robotList.GetNodesInRange(start, end);
+            OnInventoryUpdated?.Invoke(start);
         }
-        return -1;
     }
 }

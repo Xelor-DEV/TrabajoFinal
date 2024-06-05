@@ -4,37 +4,31 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private PlayerInventory playerInventory;
-    [SerializeField] private GridLayoutGroup gridLayoutGroup;
+    [SerializeField] private GridLayoutGroup CardHolder;
     [SerializeField] private GameObject robotCardPrefab;
-
     private void OnEnable()
     {
         playerInventory.OnInventoryUpdated += UpdateDisplayedRobots;
     }
-
     private void OnDisable()
     {
         playerInventory.OnInventoryUpdated -= UpdateDisplayedRobots;
     }
-
-    private void UpdateDisplayedRobots()
+    private void UpdateDisplayedRobots(int start)
     {
-        // Primero, destruimos las tarjetas de robots existentes
-        for (int i = 0; i < gridLayoutGroup.transform.childCount; i++)
+        for (int i = 0; i < CardHolder.transform.childCount; ++i)
         {
-            GameObject child = gridLayoutGroup.transform.GetChild(i).gameObject;
+            GameObject child = CardHolder.transform.GetChild(i).gameObject;
             Destroy(child);
         }
-
-        // Luego, creamos nuevas tarjetas de robots para cada robot en el inventario
-        for (int i = 0; i < playerInventory.displayedRobots.Length; i++)
+        for (int i = 0; i < playerInventory.DisplayedRobots.Length; ++i)
         {
-            RobotCard robot = playerInventory.displayedRobots[i];
+            RobotCard robot = playerInventory.DisplayedRobots[i];
             if (robot != null)
             {
-                GameObject robotCard = Instantiate(robotCardPrefab, gridLayoutGroup.transform);
+                GameObject robotCard = Instantiate(robotCardPrefab, CardHolder.transform);
                 RobotCardController robotCardController = robotCard.GetComponent<RobotCardController>();
-                robotCardController.SetData(robot);
+                robotCardController.SetData(robot, start + i);
             }
         }
     }
