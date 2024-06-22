@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
             }
             if (_leftClick == true && currentRobot != null && currentData != null)
             {
-                if (hitInfo.collider.tag == "Slab")
+                if (hitInfo.collider != null && hitInfo.collider.tag == "Slab")
                 {
                     SlabController slab = hitInfo.collider.gameObject.GetComponent<SlabController>();
                     if (grid.Robots[slab.XIndex, slab.YIndex] == null)

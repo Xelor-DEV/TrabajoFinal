@@ -3,7 +3,7 @@ using System;
 
 public class PlayerInventory : MonoBehaviour
 {
-    private DoubleLinkedCircularList<RobotCard> robotList = new DoubleLinkedCircularList<RobotCard>();
+    private DoublyLinkedList<RobotCard> robotList = new DoublyLinkedList<RobotCard>();
     public RobotCard[] displayedRobots;
     [SerializeField] private int currentPage;
     [SerializeField] private int robotsPerPage;
@@ -37,7 +37,7 @@ public class PlayerInventory : MonoBehaviour
         }
         else
         {
-            robotList.DeleteNodeAtPosition(index);
+            robotList.DeleteNodeByPosition(index);
             if (robotList.Count <= robotsPerPage * (totalPages - 1) && totalPages > 1)
             {
                 totalPages = totalPages - 1;
