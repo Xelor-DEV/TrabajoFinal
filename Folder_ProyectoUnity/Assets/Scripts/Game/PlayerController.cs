@@ -6,11 +6,11 @@ public class PlayerController : MonoBehaviour
     public static PlayerController Instance { get; private set; }
     //Componentes
     private Rigidbody _compRigidbody;
-    [Header("Referencias")]
+    [Header("References")]
     [SerializeField] private PlayerInventory inventory;
 	[SerializeField] private GameGrid grid;
     [SerializeField] private Camera playerCamera;
-    [Header("Control de la camara")]
+    [Header("Camera Properties")]
     private Vector2 _mousePosition;
     private Vector2 _directionXZ;
     private float _directionY;
@@ -76,10 +76,13 @@ public class PlayerController : MonoBehaviour
             _leftClick = false;
         }
     }
+    public void GetMousePosition(InputAction.CallbackContext context)
+    {
+        _mousePosition = context.ReadValue<Vector2>();
+    }
     private void Update()
     {
-        playerCamera.transform.position = this.gameObject.transform.position;
-        _mousePosition = Mouse.current.position.ReadValue();
+        playerCamera.transform.position = transform.position;
         RotateCamera();
         PlaceRobot();
     }

@@ -222,15 +222,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "ExitGame",
-                    "type": "Button",
-                    "id": "949784ce-d0c4-4886-ac3f-0bfaddd0657b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -247,12 +238,34 @@
                 },
                 {
                     "name": "",
-                    "id": "7d06cbd1-b31f-4055-8acb-360bdce0c0e2",
-                    "path": "<Keyboard>/escape",
+                    "id": "0e99b21d-4151-463b-9dba-d04859e40c4c",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard and Mouse",
-                    "action": "ExitGame",
+                    "action": "GoMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d270288a-5828-4c00-ad5a-d55f8761a24c",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "GoMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a1dd46c6-a792-4f60-9d57-361444cfd8f5",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard and Mouse",
+                    "action": "GoMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

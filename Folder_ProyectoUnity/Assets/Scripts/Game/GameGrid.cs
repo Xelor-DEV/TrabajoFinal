@@ -40,7 +40,7 @@ public class GameGrid : MonoBehaviour
             for (int j = 0; j < width; j++)
             {
                 Vector3 position = new Vector3(startPosition.position.x + (spacingX * j), startPosition.position.y, startPosition.position.z + (spacingY * i));
-                GameObject slab = Instantiate(slabPrefab, position, Quaternion.identity);
+                GameObject slab = Instantiate(slabPrefab, position, slabPrefab.transform.rotation);
                 SlabController slabComponent = slab.GetComponent<SlabController>();
                 if (slabComponent != null)
                 {

@@ -12,15 +12,18 @@ public class UIManagerMenu : MonoBehaviour
     [SerializeField] private GameObject blackScreen;
     [SerializeField] private RectTransform buttons;
     [SerializeField] private RectTransform[] windows;
+    [SerializeField] private RectTransform logo;
     [Header("Transition Properties")]
     [SerializeField] private GameObject transition;
     [SerializeField] private GameObject transitionTarget;
     [SerializeField] private float duration;
     [SerializeField] private Ease ease;
-    [SerializeField] private bool transitionEnded;
-    [Header("Button and Windows Hide/Show Properties")]
-    [SerializeField] private float hideShowOffsetX;
-    [SerializeField] private float hideShowOffsetY;
+    [SerializeField] private bool transitionEnded = false;
+    private bool isTransitioning = false;
+    [Header("Buttons, Windows and Logo Hide/Show Properties")]
+    [SerializeField] private float offsetX_Button;
+    [SerializeField] private float offsetY_Windows;
+    [SerializeField] private float offsetY_Logo;
     [Header("Music Sliders")]
     [SerializeField] private Slider masterSlider;
     [SerializeField] private Slider musicSlider;
@@ -52,11 +55,15 @@ public class UIManagerMenu : MonoBehaviour
     {
         splashScreen.started += OnVideoStarted;
         splashScreen.loopPointReached += OnVideoEnded;
+        OnWindowHide += ShowLogo;
+        OnWindowHide += ShowButtons;
     }
     private void OnDisable()
     {
         splashScreen.started -= OnVideoStarted;
         splashScreen.loopPointReached -= OnVideoEnded;
+        OnWindowHide -= ShowLogo;
+        OnWindowHide -= ShowButtons;
     }
     private void Start()
     {
@@ -73,7 +80,7 @@ public class UIManagerMenu : MonoBehaviour
     }
     public void GoMenu(InputAction.CallbackContext context)
     {
-        if (context.performed == true && transitionEnded == true)
+        if (context.performed == true && isTransitioning == false && transitionEnded == true)
         {
             transitionEnded = false;
             Transition(startScreen, false);
@@ -81,51 +88,55 @@ public class UIManagerMenu : MonoBehaviour
     }
     public void Transition(GameObject objectToDestroy, bool isSplashScreen)
     {
-        if (isSplashScreen == true)
+        if (isTransitioning == false) 
         {
+            isTransitioning = true;
             Vector3 initialPosition = transition.transform.position;
             AudioManager.Instance.PlaySfx(2);
             transition.transform.DOMove(transitionTarget.transform.position, duration).SetEase(ease).OnComplete(() =>
             {
                 Destroy(objectToDestroy);
                 AudioManager.Instance.PlaySfx(1);
-                transition.transform.DOMove(initialPosition, duration).SetEase(ease).OnComplete(() =>
-                {
-                    transitionEnded = true;
-                });
-            });
-        }
-        else
-        {
-            Vector3 initialPosition = transition.transform.position;
-            AudioManager.Instance.PlaySfx(2);
-            transition.transform.DOMove(transitionTarget.transform.position, duration).SetEase(ease).OnComplete(() =>
-            {
 
-                Destroy(objectToDestroy);
-                AudioManager.Instance.PlaySfx(1);
                 transition.transform.DOMove(initialPosition, duration).SetEase(ease).OnComplete(() =>
                 {
-                    
-                    ShowButtons();
+                    if (isSplashScreen == true)
+                    {
+                        transitionEnded = true;
+                    }
+                    else
+                    {
+                        ShowButtons();
+                        ShowLogo();
+                    }
+                    isTransitioning = false;
                 });
             });
         }
+    }
+    public void HideLogo()
+    {
+        logo.DOAnchorPosY(logo.anchoredPosition.y + offsetY_Logo, duration).SetEase(ease);
+    }
+    public void ShowLogo()
+    {
+        logo.DOAnchorPosY(logo.anchoredPosition.y - offsetY_Logo, duration).SetEase(ease);
     }
     public void HideButtons()
     {
-        buttons.DOAnchorPosX(buttons.anchoredPosition.x - hideShowOffsetX, duration).SetEase(ease);
+        buttons.DOAnchorPosX(buttons.anchoredPosition.x - offsetX_Button, duration).SetEase(ease);
     }
     public void ShowButtons()
     {
-        buttons.DOAnchorPosX(buttons.anchoredPosition.x + hideShowOffsetX, duration).SetEase(ease);
+        buttons.DOAnchorPosX(buttons.anchoredPosition.x + offsetX_Button, duration).SetEase(ease);
     }
     public void ShowWindow(int index)
     {
         if (index >= 0 && index < windows.Length)
         {
             HideButtons();
-            windows[index].DOAnchorPosY(windows[index].anchoredPosition.y - hideShowOffsetY, duration).SetEase(ease);
+            HideLogo();
+            windows[index].DOAnchorPosY(windows[index].anchoredPosition.y - offsetY_Windows, duration).SetEase(ease);
             OnWindowShow?.Invoke(index);
         }
     }
@@ -133,8 +144,7 @@ public class UIManagerMenu : MonoBehaviour
     {
         if (index >= 0 && index < windows.Length)
         {
-            ShowButtons();
-            windows[index].DOAnchorPosY(windows[index].anchoredPosition.y + hideShowOffsetY, duration).SetEase(ease);
+            windows[index].DOAnchorPosY(windows[index].anchoredPosition.y + offsetY_Windows, duration).SetEase(ease);
             OnWindowHide?.Invoke();
         }
     }

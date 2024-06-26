@@ -16,5 +16,5 @@ MonoBehaviour:
   robotName: Peashooter
   life: 5
   damage: 10
-  robotPrefab: {fileID: 3617684065576661417, guid: 9df84b6bd2090be4bb6ad2ec1c77fcfc,
+  robotPrefab: {fileID: 427544958866194373, guid: 8b50b8418447a0946bb899ffea9130eb,
     type: 3}
