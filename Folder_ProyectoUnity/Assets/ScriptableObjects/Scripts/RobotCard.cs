@@ -63,4 +63,16 @@ public class RobotCard : ScriptableObject
             robotPrefab = value;
         }
     }
+    [SerializeField] private int cost;
+    public int Cost
+    {
+        get
+        {
+            return cost;
+        }
+        set
+        {
+            cost = value;
+        }
+    }
 }

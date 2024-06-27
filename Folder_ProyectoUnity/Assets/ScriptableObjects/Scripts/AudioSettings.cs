@@ -1,8 +1,42 @@
 using UnityEngine;
-[CreateAssetMenu(fileName = "AudioSettings", menuName = "ScriptableObjects/AudioSettings", order = 1)]
+[CreateAssetMenu(fileName = "AudioSettings", menuName = "ScriptableObjects/Data/AudioSettings", order = 1)]
 public class AudioSettings : ScriptableObject
 {
-    public float musicVolume;
-    public float sfxVolume;
-    public float masterVolume;
+    [Header("Volume Levels")]
+    [SerializeField] private float musicVolume;
+    [SerializeField] private float sfxVolume;
+    [SerializeField] private float masterVolume;
+    public float MusicVolume
+    {
+        get 
+        { 
+            return musicVolume; 
+        }
+        set 
+        { 
+            musicVolume = value; 
+        }
+    }
+    public float SfxVolume
+    {
+        get 
+        { 
+            return sfxVolume; 
+        }
+        set 
+        { 
+            sfxVolume = value; 
+        }
+    }
+    public float MasterVolume
+    {
+        get 
+        { 
+            return masterVolume; 
+        }
+        set 
+        { 
+            masterVolume = value; 
+        }
+    }
 }

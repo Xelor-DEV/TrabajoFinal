@@ -10,17 +10,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerInventory inventory;
 	[SerializeField] private GameGrid grid;
     [SerializeField] private Camera playerCamera;
-    [Header("Camera Properties")]
+    [SerializeField] private Base playerBase;
     private Vector2 _mousePosition;
     private Vector2 _directionXZ;
     private float _directionY;
     private bool _leftClick = false;
+    [Header("Camera Properties")]
     [SerializeField] private float cameraRotationSpeed;
     [SerializeField] private float screenDistanceDetection; // Valores de 0 a 1
     [SerializeField] float speed;
+    [Header("Properties")]
+    [SerializeField] private int money; // Esta variable representa la cantidad de photon credits que tiene el jugador
     [SerializeField] private RobotCard currentData;
     [SerializeField] private GameObject currentRobot;
-    [SerializeField] private LayerMask detectionLayers;
+    [SerializeField] private LayerMask slabLayer;
     public PlayerInventory Inventory
     {
         get
@@ -90,9 +93,9 @@ public class PlayerController : MonoBehaviour
     {
         if (currentRobot != null)
         {
-            Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = playerCamera.ScreenPointToRay(_mousePosition);
             RaycastHit hitInfo;
-            if (Physics.Raycast(ray, out hitInfo, 100f, detectionLayers))
+            if (Physics.Raycast(ray, out hitInfo, 100f, slabLayer))
             {
                 currentRobot.transform.position = hitInfo.point;
             }

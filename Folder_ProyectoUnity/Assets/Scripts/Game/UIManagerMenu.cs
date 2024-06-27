@@ -20,6 +20,7 @@ public class UIManagerMenu : MonoBehaviour
     [SerializeField] private Ease ease;
     [SerializeField] private bool transitionEnded = false;
     private bool isTransitioning = false;
+    [SerializeField] private bool skipSplashScreen;
     [Header("Buttons, Windows and Logo Hide/Show Properties")]
     [SerializeField] private float offsetX_Button;
     [SerializeField] private float offsetY_Windows;
@@ -67,7 +68,15 @@ public class UIManagerMenu : MonoBehaviour
     }
     private void Start()
     {
-        splashScreen.Play();
+        if (skipSplashScreen == true)
+        {
+            OnVideoStarted(splashScreen);
+            OnVideoEnded(splashScreen);
+        }
+        else
+        {
+            splashScreen.Play();
+        }
     }
     private void OnVideoStarted(VideoPlayer vp)
     {

@@ -8,7 +8,10 @@ public class GameManagerController : MonoBehaviour
     [SerializeField] private UIManagerMenu uiManagerMenu;
     [SerializeField] private UIManager uiManagerGame;
     [SerializeField] private AudioManager audioManager;
+    [SerializeField] private GameStats gameStats;
     public UnityEvent onStart;
+    [Header("Properties")]
+    [SerializeField] private float time;
     private void Start()
     {
         onStart?.Invoke();
@@ -28,15 +31,15 @@ public class GameManagerController : MonoBehaviour
     {
         if(uiManagerGame != null)
         {
-            audioManager.AudioSettings.musicVolume = uiManagerGame.MusicSlider.value;
-            audioManager.AudioSettings.sfxVolume = uiManagerGame.SfxSlider.value;
-            audioManager.AudioSettings.masterVolume = uiManagerGame.MasterSlider.value;
+            audioManager.AudioSettings.MusicVolume = uiManagerGame.MusicSlider.value;
+            audioManager.AudioSettings.SfxVolume = uiManagerGame.SfxSlider.value;
+            audioManager.AudioSettings.MasterVolume = uiManagerGame.MasterSlider.value;
         }
         else if(uiManagerMenu != null)
         {
-            audioManager.AudioSettings.musicVolume = uiManagerMenu.MusicSlider.value;
-            audioManager.AudioSettings.sfxVolume = uiManagerMenu.SfxSlider.value;
-            audioManager.AudioSettings.masterVolume = uiManagerMenu.MasterSlider.value;
+            audioManager.AudioSettings.MusicVolume = uiManagerMenu.MusicSlider.value;
+            audioManager.AudioSettings.SfxVolume = uiManagerMenu.SfxSlider.value;
+            audioManager.AudioSettings.MasterVolume = uiManagerMenu.MasterSlider.value;
         }
         else
         {
@@ -47,18 +50,18 @@ public class GameManagerController : MonoBehaviour
     {
         if (uiManagerGame != null)
         {
-            uiManagerGame.MusicSlider.value = audioManager.AudioSettings.musicVolume;
-            uiManagerGame.SfxSlider.value = audioManager.AudioSettings.sfxVolume;
-            uiManagerGame.MasterSlider.value = audioManager.AudioSettings.masterVolume;
+            uiManagerGame.MusicSlider.value = audioManager.AudioSettings.MusicVolume;
+            uiManagerGame.SfxSlider.value = audioManager.AudioSettings.SfxVolume;
+            uiManagerGame.MasterSlider.value = audioManager.AudioSettings.MasterVolume;
             audioManager.SetVolumeOfMusic(uiManagerGame.MusicSlider);
             audioManager.SetVolumeOfSfx(uiManagerGame.SfxSlider);
             audioManager.SetVolumeOfMaster(uiManagerGame.MasterSlider);
         }
         else if (uiManagerMenu != null)
         {
-            uiManagerMenu.MusicSlider.value = audioManager.AudioSettings.musicVolume;
-            uiManagerMenu.SfxSlider.value = audioManager.AudioSettings.sfxVolume;
-            uiManagerMenu.MasterSlider.value = audioManager.AudioSettings.masterVolume;
+            uiManagerMenu.MusicSlider.value = audioManager.AudioSettings.MusicVolume;
+            uiManagerMenu.SfxSlider.value = audioManager.AudioSettings.SfxVolume;
+            uiManagerMenu.MasterSlider.value = audioManager.AudioSettings.MasterVolume;
             audioManager.SetVolumeOfMusic(uiManagerMenu.MusicSlider);
             audioManager.SetVolumeOfSfx(uiManagerMenu.SfxSlider);
             audioManager.SetVolumeOfMaster(uiManagerMenu.MasterSlider);
@@ -67,7 +70,5 @@ public class GameManagerController : MonoBehaviour
         {
             Debug.LogError("No existe un UI Manager, ambos son nulos");
         }
-
     }
-
 }
