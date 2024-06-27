@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.25732678, g: 0.69084895, b: 0.81972224, a: 1}
+  m_IndirectSpecularColor: {r: 0.25810277, g: 0.6908051, b: 0.81899595, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -416,8 +416,8 @@ MonoBehaviour:
   CardHolder: {fileID: 1241513226}
   robotCardPrefab: {fileID: 6560351961025906870, guid: 10751d09d30c76b44bab2926f0f54c31,
     type: 3}
-  playerBase: {fileID: 0}
-  botBase: {fileID: 0}
+  playerBase: {fileID: 11400000, guid: 4751c0c54ee96504a9515d113ee504b2, type: 2}
+  botBase: {fileID: 11400000, guid: d38882e605b9e1543a02c1adcae9a9ce, type: 2}
   playerLife: {fileID: 0}
   botLife: {fileID: 0}
   time: {fileID: 0}

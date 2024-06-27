@@ -1,18 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 public class BaseController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Base this_Base;
+    private void OnTriggerEnter(Collider other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if(other.tag == "Bullet")
+        {
+            Bullet bullet = other.GetComponent<Bullet>();
+            if(bullet != null) 
+            {
+                this_Base.ReceiveDamage(bullet.Damage);
+            }
+        }
     }
 }
