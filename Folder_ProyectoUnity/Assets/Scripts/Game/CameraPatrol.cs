@@ -23,7 +23,7 @@ public class CameraPatrol : MonoBehaviour
             Vector3 direction = destination - currentPosition;
             float distanceToDestination = direction.magnitude;
 
-            if (distanceToDestination < 0.1f)
+            if (distanceToDestination < pointSpacing)
             {
                 index = (index + 1) % patrolPoints.Length;
                 destination = patrolPoints[index].position;

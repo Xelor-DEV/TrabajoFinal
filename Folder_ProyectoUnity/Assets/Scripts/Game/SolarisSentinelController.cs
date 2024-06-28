@@ -1,18 +1,63 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-public class SolarisSentinelController : MonoBehaviour
+using System;
+using System.Collections;
+public class SolarisSentinelController : Robot
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private float generateMoneyInterval;
+    [SerializeField] private int moneyPerInterval;
+    public event Action<int> onMoneyGenerated;
+    [SerializeField] private PlayerController player;
+    public PlayerController Player
     {
-        
+        set
+        {
+            player = value;
+        }
+    }
+    private BotAIController bot;
+    public BotAIController Bot
+    {
+        set
+        {
+            Bot = value;
+        }
+    }
+    private void OnEnable()
+    {
+        if (player != null)
+        {
+            onMoneyGenerated += player.AddMoney;
+        }
+        else if (bot != null)
+        {
+            onMoneyGenerated += bot.AddMoney;
+        }
+        else
+        {
+            Debug.Log("f");
+        }
+    }
+    private void OnDisable()
+    {
+        if (player != null)
+        {
+            onMoneyGenerated -= player.AddMoney;
+        }
+        else if (bot != null)
+        {
+            onMoneyGenerated -= bot.AddMoney;
+        }
+    }
+    private void Start()
+    {
+        StartCoroutine(GenerateMoneyRoutine());
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator GenerateMoneyRoutine()
     {
-        
+        yield return new WaitForSeconds(generateMoneyInterval);
+        onMoneyGenerated?.Invoke(moneyPerInterval);
+        Debug.Log("listo");
+        StartCoroutine(GenerateMoneyRoutine());
     }
 }

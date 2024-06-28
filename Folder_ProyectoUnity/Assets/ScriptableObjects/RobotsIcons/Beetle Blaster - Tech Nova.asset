@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3935fed9ddc99c041bb63a3d33b7b417, type: 3}
-  m_Name: Solaris Sentinel - Tech Nova
+  m_Name: Beetle Blaster - Tech Nova
   m_EditorClassIdentifier: 
-  robotIcon: {fileID: 21300000, guid: 7d4df7ce5cb31af45be00641ce26f601, type: 3}
-  robotName: Solaris Sentinel
-  life: 30
-  damage: 0
-  robotPrefab: {fileID: 244638776656588042, guid: 919f9570dc2567b45899464fcd32be43,
+  robotIcon: {fileID: 21300000, guid: 8037846a055540d4fb6dcc8314561057, type: 3}
+  robotName: Beetle Blaster
+  life: 40
+  damage: 5
+  robotPrefab: {fileID: 6167045605494005360, guid: dff5a8ae7277c7b459fd84818f82c25f,
     type: 3}
-  cost: 20
+  cost: 40

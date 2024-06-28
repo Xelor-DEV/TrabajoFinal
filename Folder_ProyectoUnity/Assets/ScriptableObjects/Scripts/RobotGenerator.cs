@@ -1,17 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RobotGenerator : MonoBehaviour
 {
+    [SerializeField] private RobotCard card;
+    [SerializeField] private PlayerInventory inventory;
     GameObject robot;
     int generationTime;
     BinaryTree<float> upgrades;
     float currentUpgrade;
-    private void Start()
+    public void BuyRobot()
     {
-        upgrades = new BinaryTree<float>();
-        upgrades.InsertNewNode(1);
-
+        if (PlayerController.Instance.Money >= card.Cost)
+        {
+            PlayerController.Instance.SubstractMoney(card.Cost);
+            inventory.AddRobot(card);
+        }
     }
 }

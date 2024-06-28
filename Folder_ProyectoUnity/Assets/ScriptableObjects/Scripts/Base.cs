@@ -12,6 +12,13 @@ public class Base : ScriptableObject
         }
     }
     [SerializeField] private int life;
+    public int Life
+    {
+        get
+        {
+            return life;
+        }
+    }
     public Action<int> onBaseAttacked;
     public Action onBaseDestroyed;
     public void ReceiveDamage(int damage)

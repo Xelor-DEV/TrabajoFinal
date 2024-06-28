@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     //Componentes
     private Rigidbody _compRigidbody;
     [Header("References")]
+    [SerializeField] private UIManager uiManager;
     [SerializeField] private PlayerInventory inventory;
 	[SerializeField] private GameGrid grid;
     [SerializeField] private Camera playerCamera;
@@ -106,7 +107,9 @@ public class PlayerController : MonoBehaviour
                     SlabController slab = hitInfo.collider.gameObject.GetComponent<SlabController>();
                     if (grid.Robots[slab.XIndex, slab.YIndex] == null)
                     {
-                        grid.Robots[slab.XIndex, slab.YIndex] = currentRobot.GetComponent<Robot>();
+                        Robot tmp = currentRobot.GetComponent<Robot>();
+                        grid.Robots[slab.XIndex, slab.YIndex] = tmp;
+                        tmp.SetData(currentData);
                         currentRobot.transform.position = grid.Slabs[slab.XIndex, slab.YIndex].transform.position;
                         currentData = null;
                         currentRobot = null;
@@ -153,6 +156,18 @@ public class PlayerController : MonoBehaviour
         if (currentData == null)
         {
             currentData = currentRobot;
+            if (currentData.RobotPrefab.CompareTag("SolarisSentinel") == true)
+            {
+                
+                SolarisSentinelController sentinel = currentData.RobotPrefab.GetComponent<SolarisSentinelController>();
+                sentinel.Player = this.gameObject.GetComponent<PlayerController>();
+                Debug.Log("registrado");
+                sentinel.onMoneyGenerated += AddMoney;
+            }
+            else
+            {
+                Debug.Log("f2");
+            }
             this.currentRobot = Instantiate(currentRobot.RobotPrefab);
             established = true;
             return established;
@@ -161,6 +176,23 @@ public class PlayerController : MonoBehaviour
         {
             established = false;
             return established;
+        }
+    }
+    public void AddMoney(int amount)
+    {
+        Money = Money + amount;
+    }
+    public void SubstractMoney(int amount)
+    {
+        Money = Money - amount;
+    }
+    public int Money
+    {
+        get { return money; }
+        private set
+        {
+            money = value;
+            uiManager.UpdateMoneyDisplay(money);
         }
     }
 }

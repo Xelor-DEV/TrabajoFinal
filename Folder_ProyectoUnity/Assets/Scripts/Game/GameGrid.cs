@@ -51,4 +51,40 @@ public class GameGrid : MonoBehaviour
             }
         }
     }
+    public bool IsFull()
+    {
+        for (int i = 0; i < length; ++i)
+        {
+            for (int j = 0; j < width; ++j)
+            {
+                if (slabs[i, j] == null)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public GameObject GetRandomEmptyPosition()
+    {
+        int emptyCount = 0;
+        GameObject emptySlab = null;
+
+        for (int i = 0; i < length; i++)
+        {
+            for (int j = 0; j < width; j++)
+            {
+                if (robots[i, j] == null)
+                {
+                    emptyCount++;
+                    if (Random.Range(0, emptyCount) == 0)
+                    {
+                        emptySlab = slabs[i, j];
+                    }
+                }
+            }
+        }
+
+        return emptySlab;
+    }
 }

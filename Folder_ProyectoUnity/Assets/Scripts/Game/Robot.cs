@@ -1,9 +1,9 @@
 using UnityEngine;
 public class Robot : MonoBehaviour
 {
-    private int life;
-    private int maxLife;
-    private int damage;
+    [SerializeField] protected int life;
+    [SerializeField] protected int maxLife;
+    [SerializeField] protected int damage;
     public void SetData(RobotCard card)
     {
         life = card.Life;

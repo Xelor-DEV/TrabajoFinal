@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Slider playerLife;
     [SerializeField] private Slider botLife;
     [SerializeField] private TMP_Text time;
+    [SerializeField] private TMP_Text money;
     [Header("Music Sliders")]
     [SerializeField] private Slider masterSlider;
     [SerializeField] private Slider musicSlider;
@@ -52,6 +53,9 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         playerLife.maxValue = playerBase.MaxLife;
+        botLife.maxValue = botBase.MaxLife;
+        UpdatePlayerLifeBar(playerBase.Life);
+        UpdateBotLifeBar(botBase.Life);
     }
     public void UpdatePlayerLifeBar(int newLife)
     {
@@ -78,5 +82,9 @@ public class UIManager : MonoBehaviour
                 robotCardController.SetData(robot, start + i);
             }
         }
+    }
+    public void UpdateMoneyDisplay(int money)
+    {
+        this.money.text = money.ToString();
     }
 }
