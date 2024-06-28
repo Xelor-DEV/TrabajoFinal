@@ -57,7 +57,7 @@ public class GameGrid : MonoBehaviour
         {
             for (int j = 0; j < width; ++j)
             {
-                if (slabs[i, j] == null)
+                if (robots[i, j] == null)
                 {
                     return false;
                 }

@@ -89,8 +89,11 @@ public class BotAIController : MonoBehaviour
                     sentinel.Bot = this.gameObject.GetComponent<BotAIController>();
                     sentinel.onMoneyGenerated += AddMoney;
                 }
-                GameObject producer = Instantiate(moneyProducers[0].RobotPrefab, emptySlab.transform.position, Quaternion.identity);
-                botGrid.Robots[slab.XIndex, slab.YIndex] = producer.GetComponent<Robot>();
+                GameObject producer = Instantiate(moneyProducers[0].RobotPrefab);
+            producer.transform.position = emptySlab.transform.position;
+            Robot tmp = producer.GetComponent<Robot>();
+                botGrid.Robots[slab.XIndex, slab.YIndex] = tmp;
+            tmp.SetData(moneyProducers[0]);
                 money -= GetCost(moneyProducers[0]);
                 currentMoneyProducers++;
         }
@@ -105,11 +108,13 @@ public class BotAIController : MonoBehaviour
         {
             GameObject emptySlab = botGrid.GetRandomEmptyPosition();
             SlabController slab = emptySlab.GetComponent<SlabController>();
-            GameObject placedRobot = Instantiate(robot.RobotPrefab, emptySlab.transform.position, Quaternion.identity);
-            botGrid.Robots[slab.XIndex, slab.YIndex] = placedRobot.GetComponent<Robot>();
+            GameObject placedRobot = Instantiate(robot.RobotPrefab);
+            placedRobot.transform.position = emptySlab.transform.position;
+            Robot tmp = placedRobot.GetComponent<Robot>();
+            botGrid.Robots[slab.XIndex, slab.YIndex] = tmp;
+            tmp.SetData(robot);
             money -= GetCost(robot);
         }
-
     }
     private int GetCost(RobotCard robot)
     {

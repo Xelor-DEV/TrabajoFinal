@@ -239,7 +239,6 @@ MonoBehaviour:
   generateMoneyInterval: 5
   moneyPerInterval: 10
   player: {fileID: 0}
-  bot: {fileID: 0}
 --- !u!4 &589673614913484720 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6ee8ce8a10ed8444599491db6d81122f,

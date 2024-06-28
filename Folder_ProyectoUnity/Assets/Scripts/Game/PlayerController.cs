@@ -161,12 +161,7 @@ public class PlayerController : MonoBehaviour
                 
                 SolarisSentinelController sentinel = currentData.RobotPrefab.GetComponent<SolarisSentinelController>();
                 sentinel.Player = this.gameObject.GetComponent<PlayerController>();
-                Debug.Log("registrado");
                 sentinel.onMoneyGenerated += AddMoney;
-            }
-            else
-            {
-                Debug.Log("f2");
             }
             this.currentRobot = Instantiate(currentRobot.RobotPrefab);
             established = true;

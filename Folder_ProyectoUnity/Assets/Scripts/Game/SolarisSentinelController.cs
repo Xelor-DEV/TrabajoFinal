@@ -14,12 +14,12 @@ public class SolarisSentinelController : Robot
             player = value;
         }
     }
-    private BotAIController bot;
+    [SerializeField] private BotAIController bot;
     public BotAIController Bot
     {
         set
         {
-            Bot = value;
+            bot = value;
         }
     }
     private void OnEnable()
@@ -31,10 +31,6 @@ public class SolarisSentinelController : Robot
         else if (bot != null)
         {
             onMoneyGenerated += bot.AddMoney;
-        }
-        else
-        {
-            Debug.Log("f");
         }
     }
     private void OnDisable()
@@ -57,7 +53,6 @@ public class SolarisSentinelController : Robot
     {
         yield return new WaitForSeconds(generateMoneyInterval);
         onMoneyGenerated?.Invoke(moneyPerInterval);
-        Debug.Log("listo");
         StartCoroutine(GenerateMoneyRoutine());
     }
 }

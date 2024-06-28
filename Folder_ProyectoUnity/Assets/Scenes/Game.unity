@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.25732678, g: 0.69084895, b: 0.81972224, a: 1}
+  m_IndirectSpecularColor: {r: 0.25810277, g: 0.6908051, b: 0.81899595, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -877,20 +877,20 @@ MonoBehaviour:
   money: 50
   botBase: {fileID: 11400000, guid: d38882e605b9e1543a02c1adcae9a9ce, type: 2}
   offensiveRobots:
-  - {fileID: 11400000, guid: 891d33c726347b244a64b05fec2fa051, type: 2}
-  - {fileID: 11400000, guid: 891d33c726347b244a64b05fec2fa051, type: 2}
-  - {fileID: 11400000, guid: 891d33c726347b244a64b05fec2fa051, type: 2}
+  - {fileID: 11400000, guid: f160403ea327c434abba2d2954c0f657, type: 2}
+  - {fileID: 11400000, guid: f160403ea327c434abba2d2954c0f657, type: 2}
+  - {fileID: 11400000, guid: f160403ea327c434abba2d2954c0f657, type: 2}
   defensiveRobots:
-  - {fileID: 11400000, guid: 891d33c726347b244a64b05fec2fa051, type: 2}
-  - {fileID: 11400000, guid: 891d33c726347b244a64b05fec2fa051, type: 2}
-  - {fileID: 11400000, guid: 891d33c726347b244a64b05fec2fa051, type: 2}
+  - {fileID: 11400000, guid: f160403ea327c434abba2d2954c0f657, type: 2}
+  - {fileID: 11400000, guid: f160403ea327c434abba2d2954c0f657, type: 2}
+  - {fileID: 11400000, guid: f160403ea327c434abba2d2954c0f657, type: 2}
   balancedRobots:
-  - {fileID: 11400000, guid: 891d33c726347b244a64b05fec2fa051, type: 2}
-  - {fileID: 11400000, guid: 891d33c726347b244a64b05fec2fa051, type: 2}
-  - {fileID: 11400000, guid: 891d33c726347b244a64b05fec2fa051, type: 2}
+  - {fileID: 11400000, guid: f160403ea327c434abba2d2954c0f657, type: 2}
+  - {fileID: 11400000, guid: f160403ea327c434abba2d2954c0f657, type: 2}
+  - {fileID: 11400000, guid: f160403ea327c434abba2d2954c0f657, type: 2}
   moneyProducers:
-  - {fileID: 11400000, guid: 04b53ddd3fb6b614f99de6e96968c9eb, type: 2}
-  - {fileID: 11400000, guid: 04b53ddd3fb6b614f99de6e96968c9eb, type: 2}
+  - {fileID: 11400000, guid: 3a4182197f59cc74ab93df7cd75ff3d2, type: 2}
+  - {fileID: 11400000, guid: 3a4182197f59cc74ab93df7cd75ff3d2, type: 2}
   botGrid: {fileID: 465436958}
   actionCooldown: 5
   currentMoneyProducers: 0
