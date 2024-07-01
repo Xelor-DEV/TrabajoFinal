@@ -16,6 +16,6 @@ MonoBehaviour:
   robotName: Beetle Blaster
   life: 40
   damage: 5
-  robotPrefab: {fileID: 6167045605494005360, guid: a791899b848d787439d7d964d8dbe779,
+  robotPrefab: {fileID: 3939009715793475868, guid: d2323712fbf483944a883f27102361fb,
     type: 3}
   cost: 40

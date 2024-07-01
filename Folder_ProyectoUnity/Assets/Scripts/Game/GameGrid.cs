@@ -87,4 +87,23 @@ public class GameGrid : MonoBehaviour
 
         return emptySlab;
     }
+    public GameObject GetRandomEmptyPositionInRow(int rowIndex)
+    {
+        int emptyCount = 0;
+        GameObject emptySlab = null;
+
+        for (int j = 0; j < width; j++)
+        {
+            if (robots[rowIndex, j] == null)
+            {
+                emptyCount++;
+                if (Random.Range(0, emptyCount) == 0)
+                {
+                    emptySlab = slabs[rowIndex, j];
+                }
+            }
+        }
+
+        return emptySlab;
+    }
 }

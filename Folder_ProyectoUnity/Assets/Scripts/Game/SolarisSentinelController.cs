@@ -6,42 +6,37 @@ public class SolarisSentinelController : Robot
     [SerializeField] private float generateMoneyInterval;
     [SerializeField] private int moneyPerInterval;
     public event Action<int> onMoneyGenerated;
-    [SerializeField] private PlayerController player;
-    public PlayerController Player
-    {
-        set
-        {
-            player = value;
-        }
-    }
-    [SerializeField] private BotAIController bot;
-    public BotAIController Bot
-    {
-        set
-        {
-            bot = value;
-        }
-    }
     private void OnEnable()
     {
-        if (player != null)
+        if (Player != null)
         {
             onMoneyGenerated += player.AddMoney;
         }
-        else if (bot != null)
+        else if (Bot != null)
         {
-            onMoneyGenerated += bot.AddMoney;
+            onMoneyGenerated += Bot.AddMoney;
+            onDestroy += Bot.MoneyProducerEliminated;
         }
     }
+
     private void OnDisable()
     {
-        if (player != null)
+        if (Player != null)
         {
             onMoneyGenerated -= player.AddMoney;
         }
-        else if (bot != null)
+        else if (Bot != null)
         {
             onMoneyGenerated -= bot.AddMoney;
+            onDestroy -= bot.MoneyProducerEliminated;
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Bullet")
+        {
+            Bullet bullet = other.GetComponent<Bullet>();
+            TakeDamage(bullet.Damage);
         }
     }
     private void Start()

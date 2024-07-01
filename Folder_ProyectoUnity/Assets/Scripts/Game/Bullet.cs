@@ -16,4 +16,20 @@ public class Bullet : MonoBehaviour
     {
         this.damage = damage;
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<Robot>() != null)
+        {
+            if (other.GetComponent<GoliathGuardianController>() != null)
+            {
+                GoliathGuardianController GoliathGuardian = other.GetComponent<GoliathGuardianController>();
+                GoliathGuardian.ReflectBullet(this.gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+            
+        }
+    }
 }

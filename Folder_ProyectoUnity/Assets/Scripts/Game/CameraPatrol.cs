@@ -6,8 +6,10 @@ public class CameraPatrol : MonoBehaviour
     [Header("Properties")]
     [SerializeField] private float speed;
     [SerializeField] private float pointSpacing;
+    [SerializeField] private float rotationSpeed = 5f; // Velocidad de rotación ajustable
     private int index = 0;
     private Vector3 destination;
+
     void Start()
     {
         if (patrolPoints.Length > 0)
@@ -15,6 +17,7 @@ public class CameraPatrol : MonoBehaviour
             destination = patrolPoints[index].position + new Vector3(pointSpacing, pointSpacing, pointSpacing);
         }
     }
+
     void Update()
     {
         if (patrolPoints.Length != 0)
@@ -29,6 +32,8 @@ public class CameraPatrol : MonoBehaviour
                 destination = patrolPoints[index].position;
             }
             transform.position += direction.normalized * speed * Time.deltaTime;
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
     }
 }

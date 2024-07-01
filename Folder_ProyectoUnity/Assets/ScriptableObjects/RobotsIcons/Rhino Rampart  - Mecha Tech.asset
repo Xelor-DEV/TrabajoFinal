@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3935fed9ddc99c041bb63a3d33b7b417, type: 3}
+  m_Name: Rhino Rampart  - Mecha Tech
+  m_EditorClassIdentifier: 
+  robotIcon: {fileID: 21300000, guid: f6fcef896aaa53646874628fad8228df, type: 3}
+  robotName: Rhino Rampart
+  life: 60
+  damage: 20
+  robotPrefab: {fileID: 4478495403235295578, guid: 87061fe33b5c88d408bef6b156fafb35,
+    type: 3}
+  cost: 0

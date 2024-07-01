@@ -16,6 +16,6 @@ MonoBehaviour:
   robotName: Solaris Sentinel
   life: 30
   damage: 0
-  robotPrefab: {fileID: 244638776656588042, guid: 8397ab77bbbd17a49804fc5ca8e53b1c,
+  robotPrefab: {fileID: 5716355983823369447, guid: 8397ab77bbbd17a49804fc5ca8e53b1c,
     type: 3}
   cost: 20

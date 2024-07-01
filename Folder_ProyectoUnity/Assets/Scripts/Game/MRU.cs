@@ -3,6 +3,17 @@ public class MRU : MonoBehaviour
 {
     private Rigidbody _compRigidbody;
     [SerializeField] private Vector3 velocity;
+    public Vector3 Velocity
+    {
+        get
+        {
+            return velocity;
+        }
+        set
+        {
+            velocity = value;
+        }
+    }
     private void Start()
     {
         _compRigidbody = GetComponent<Rigidbody>();

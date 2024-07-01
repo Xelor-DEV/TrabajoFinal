@@ -4,7 +4,7 @@ using System;
 public class PlayerInventory : MonoBehaviour
 {
     private DoublyLinkedList<RobotCard> robotList = new DoublyLinkedList<RobotCard>();
-    public RobotCard[] displayedRobots;
+    private RobotCard[] displayedRobots;
     [SerializeField] private int currentPage;
     [SerializeField] private int robotsPerPage;
     [SerializeField] private int totalPages;

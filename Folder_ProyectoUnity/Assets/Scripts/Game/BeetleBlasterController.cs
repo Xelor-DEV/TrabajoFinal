@@ -4,6 +4,7 @@ public class BeetleBlasterController: Robot
 {
     [SerializeField] private GameObject bullet;
     [SerializeField] private float bulletInterval;
+
     private void Start()
     {
         StartCoroutine(GenerateBullets());
@@ -12,8 +13,16 @@ public class BeetleBlasterController: Robot
     {
         Bullet tmp = bullet.GetComponent<Bullet>();
         tmp.SetDamage(damage);
-        Instantiate(bullet, transform.position, Quaternion.identity);
+        Instantiate(bullet, transform.position ,Quaternion.identity);
         yield return new WaitForSeconds(bulletInterval);
         StartCoroutine(GenerateBullets());
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Bullet")
+        {
+            Bullet bullet = other.GetComponent<Bullet>();
+            TakeDamage(bullet.Damage);
+        }
     }
 }

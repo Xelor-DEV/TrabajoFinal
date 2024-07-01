@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 public class UIManager : MonoBehaviour
 {
     [Header("References")]
@@ -12,7 +13,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Slider playerLife;
     [SerializeField] private Slider botLife;
     [SerializeField] private TMP_Text time;
+    [SerializeField] private RectTransform win;
+    [SerializeField] private RectTransform lose;
     [SerializeField] private TMP_Text money;
+    [SerializeField] private float offset;
+    [SerializeField] private float duration;
+    [SerializeField] private Ease ease;
     [Header("Music Sliders")]
     [SerializeField] private Slider masterSlider;
     [SerializeField] private Slider musicSlider;
@@ -38,17 +44,30 @@ public class UIManager : MonoBehaviour
             return sfxSlider;
         }
     }
+
+    public void ShowWin()
+    {
+        win.DOAnchorPosY(win.anchoredPosition.y - offset, duration).SetEase(ease).OnComplete(() => Time.timeScale = 0);
+    }
+    public void ShowLose()
+    {
+        lose.DOAnchorPosY(lose.anchoredPosition.y - offset, duration).SetEase(ease).OnComplete(() => Time.timeScale = 0);
+    }
     private void OnEnable()
     {
         playerInventory.OnInventoryUpdated += UpdateDisplayedRobots;
         playerBase.onBaseAttacked += UpdatePlayerLifeBar;
         botBase.onBaseAttacked += UpdateBotLifeBar;
+        botBase.onBaseDestroyed += ShowWin;
+        playerBase.onBaseDestroyed += ShowLose;
     }
     private void OnDisable()
     {
         playerInventory.OnInventoryUpdated -= UpdateDisplayedRobots;
         playerBase.onBaseAttacked -= UpdatePlayerLifeBar;
         botBase.onBaseAttacked -= UpdateBotLifeBar;
+        botBase.onBaseDestroyed -= ShowWin;
+        playerBase.onBaseDestroyed -= ShowLose;
     }
     private void Start()
     {

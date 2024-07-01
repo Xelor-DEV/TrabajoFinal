@@ -1,7 +1,7 @@
 using UnityEngine;
 public class BaseController : MonoBehaviour
 {
-    [SerializeField] private Base this_Base;
+    [SerializeField] private Base thisBase;
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Bullet")
@@ -9,7 +9,7 @@ public class BaseController : MonoBehaviour
             Bullet bullet = other.GetComponent<Bullet>();
             if(bullet != null) 
             {
-                this_Base.ReceiveDamage(bullet.Damage);
+                thisBase.ReceiveDamage(bullet.Damage);
             }
         }
     }

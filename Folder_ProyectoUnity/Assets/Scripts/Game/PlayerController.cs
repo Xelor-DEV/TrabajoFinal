@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,22 +10,46 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     [SerializeField] private UIManager uiManager;
     [SerializeField] private PlayerInventory inventory;
-	[SerializeField] private GameGrid grid;
+	[SerializeField] private GameGrid playerGrid;
+    [SerializeField] private GameGrid botGrid;
     [SerializeField] private Camera playerCamera;
     [SerializeField] private Base playerBase;
-    private Vector2 _mousePosition;
-    private Vector2 _directionXZ;
-    private float _directionY;
-    private bool _leftClick = false;
+    [SerializeField] private BaseController botBase;
+    [SerializeField] private BaseController baseController;
+    public event Action<bool> onRobotPlacement;
+    private bool isRobotPlace = false;
+    public bool IsRobotPlace
+    {
+        get 
+        { 
+            return isRobotPlace; 
+        }
+        set
+        {
+            isRobotPlace = value;
+            if(isRobotPlace == true)
+            {
+                onRobotPlacement?.Invoke(isRobotPlace);
+                isRobotPlace = false;
+            }      
+        }
+    }
     [Header("Camera Properties")]
     [SerializeField] private float cameraRotationSpeed;
     [SerializeField] private float screenDistanceDetection; // Valores de 0 a 1
     [SerializeField] float speed;
     [Header("Properties")]
+    private Vector2 _mousePosition;
+    private Vector2 _directionXZ;
+    private float _directionY;
+    private bool _leftClick = false;
+    private bool _rightClick = false;
     [SerializeField] private int money; // Esta variable representa la cantidad de photon credits que tiene el jugador
     [SerializeField] private RobotCard currentData;
     [SerializeField] private GameObject currentRobot;
     [SerializeField] private LayerMask slabLayer;
+    private RaycastHit hitInfo;
+    [SerializeField] private int originalLayer = -1;
     public PlayerInventory Inventory
     {
         get
@@ -36,15 +61,11 @@ public class PlayerController : MonoBehaviour
             inventory = value;
         }
     }
-    public RobotCard Current
+    public BaseController BotBase
     {
         get
         {
-            return currentData;
-        }
-        set
-        {
-            currentData = value;
+            return botBase;
         }
     }
     private void Awake()
@@ -80,6 +101,17 @@ public class PlayerController : MonoBehaviour
             _leftClick = false;
         }
     }
+    public void GetRightClick(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            _rightClick = true;
+        }
+        else if (context.canceled)
+        {
+            _rightClick = false;
+        }
+    }
     public void GetMousePosition(InputAction.CallbackContext context)
     {
         _mousePosition = context.ReadValue<Vector2>();
@@ -93,11 +125,15 @@ public class PlayerController : MonoBehaviour
     public void PlaceRobot()
     {
         if (currentRobot != null)
-        {
+        {     
             Ray ray = playerCamera.ScreenPointToRay(_mousePosition);
-            RaycastHit hitInfo;
+            if (originalLayer == -1)
+            {
+                originalLayer = currentRobot.layer;
+            }
             if (Physics.Raycast(ray, out hitInfo, 100f, slabLayer))
             {
+                currentRobot.layer = LayerMask.NameToLayer("Ignore");
                 currentRobot.transform.position = hitInfo.point;
             }
             if (_leftClick == true && currentRobot != null && currentData != null)
@@ -105,41 +141,70 @@ public class PlayerController : MonoBehaviour
                 if (hitInfo.collider != null && hitInfo.collider.tag == "Slab")
                 {
                     SlabController slab = hitInfo.collider.gameObject.GetComponent<SlabController>();
-                    if (grid.Robots[slab.XIndex, slab.YIndex] == null)
+                    if (playerGrid.Robots[slab.XIndex, slab.YIndex] == null)
                     {
+                        currentRobot.layer = originalLayer;
                         Robot tmp = currentRobot.GetComponent<Robot>();
-                        grid.Robots[slab.XIndex, slab.YIndex] = tmp;
+                        playerGrid.Robots[slab.XIndex, slab.YIndex] = tmp;
                         tmp.SetData(currentData);
-                        currentRobot.transform.position = grid.Slabs[slab.XIndex, slab.YIndex].transform.position;
+                        currentRobot.transform.position = playerGrid.Slabs[slab.XIndex, slab.YIndex].transform.position;
+                        isRobotPlace = true;
                         currentData = null;
                         currentRobot = null;
                         _leftClick = false;
+                        originalLayer = -1;
                     }
                 }
+            }
+            if (_rightClick == true && currentRobot != null)
+            {
+                currentData.RobotPrefab.layer = originalLayer;
+                inventory.AddRobot(currentData);
+                Destroy(currentRobot);
+                currentData = null;
+                currentRobot = null;
+                _rightClick = false;
+                originalLayer = -1;
             }
         }
     }
     private void RotateCamera()
     {
-        Vector3 rotation = Vector3.zero;
         Vector2 viewportMousePosition = playerCamera.ScreenToViewportPoint(_mousePosition);
+        Quaternion currentRotation = playerCamera.transform.rotation;
+        float maxAngle = 85f;
+        float minAngle = -85f;
+        Quaternion xRotationDelta = Quaternion.identity;
+        Quaternion yRotationDelta = Quaternion.identity;
+
         if (viewportMousePosition.y >= 1 - screenDistanceDetection)
         {
-            rotation.x = rotation.x - cameraRotationSpeed * Time.deltaTime;
+            xRotationDelta = Quaternion.Euler(-cameraRotationSpeed * Time.deltaTime, 0f, 0f);
         }
         else if (viewportMousePosition.y <= screenDistanceDetection)
         {
-            rotation.x = rotation.x + cameraRotationSpeed * Time.deltaTime;
+            xRotationDelta = Quaternion.Euler(cameraRotationSpeed * Time.deltaTime, 0f, 0f);
         }
+
         if (viewportMousePosition.x >= 1 - screenDistanceDetection)
         {
-            rotation.y = rotation.y + cameraRotationSpeed * Time.deltaTime;
+            yRotationDelta = Quaternion.Euler(0f, cameraRotationSpeed * Time.deltaTime, 0f);
         }
         else if (viewportMousePosition.x <= screenDistanceDetection)
         {
-            rotation.y = rotation.y - cameraRotationSpeed * Time.deltaTime;
+            yRotationDelta = Quaternion.Euler(0f, -cameraRotationSpeed * Time.deltaTime, 0f);
         }
-        playerCamera.transform.eulerAngles = playerCamera.transform.eulerAngles + rotation;
+        Quaternion targetRotation = currentRotation * yRotationDelta * xRotationDelta;
+        Vector3 eulerRotation = targetRotation.eulerAngles;
+        eulerRotation.z = 0f;
+        float clampedXAngle = eulerRotation.x;
+        if (clampedXAngle > 180f)
+        {
+            clampedXAngle -= 360f;
+        }
+        clampedXAngle = Mathf.Clamp(clampedXAngle, -maxAngle, -minAngle);
+        eulerRotation.x = clampedXAngle;
+        playerCamera.transform.rotation = Quaternion.Euler(eulerRotation);
     }
     private void FixedUpdate()
     {
@@ -156,14 +221,16 @@ public class PlayerController : MonoBehaviour
         if (currentData == null)
         {
             currentData = currentRobot;
-            if (currentData.RobotPrefab.CompareTag("SolarisSentinel") == true)
+            Robot robot = currentData.RobotPrefab.GetComponent<Robot>();
+            robot.Player = this.gameObject.GetComponent<PlayerController>();
+            if (currentData.RobotPrefab.CompareTag("RhinoRampart") == true) 
             {
-                
-                SolarisSentinelController sentinel = currentData.RobotPrefab.GetComponent<SolarisSentinelController>();
-                sentinel.Player = this.gameObject.GetComponent<PlayerController>();
-                sentinel.onMoneyGenerated += AddMoney;
+                RhinoRampartController rhino = currentData.RobotPrefab.GetComponent<RhinoRampartController>();
+                rhino.Player = this.gameObject.GetComponent<PlayerController>();
+                rhino.PlayerGrid = playerGrid;
+                rhino.BotGrid = botGrid;
             }
-            this.currentRobot = Instantiate(currentRobot.RobotPrefab);
+            this.currentRobot = Instantiate(currentRobot.RobotPrefab, hitInfo.point, currentRobot.RobotPrefab.transform.rotation);
             established = true;
             return established;
         }
