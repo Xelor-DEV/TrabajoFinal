@@ -305,7 +305,7 @@ MonoBehaviour:
   player: {fileID: 0}
   bot: {fileID: 0}
   attackThreshold: 0.6
-  bullet: {fileID: 0}
+  bullet: {fileID: 366382696581821812, guid: f99f7ba238c709d409bbe724821812bb, type: 3}
   attackInterval: 5
   shotsBeforeDamageIncrease: 2
   scaleDuration: 2
