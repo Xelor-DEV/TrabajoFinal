@@ -6,7 +6,7 @@ public class CameraPatrol : MonoBehaviour
     [Header("Properties")]
     [SerializeField] private float speed;
     [SerializeField] private float pointSpacing;
-    [SerializeField] private float rotationSpeed = 5f; // Velocidad de rotación ajustable
+    [SerializeField] private float rotationSpeed;
     private int index = 0;
     private Vector3 destination;
 
@@ -17,7 +17,6 @@ public class CameraPatrol : MonoBehaviour
             destination = patrolPoints[index].position + new Vector3(pointSpacing, pointSpacing, pointSpacing);
         }
     }
-
     void Update()
     {
         if (patrolPoints.Length != 0)

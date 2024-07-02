@@ -43,19 +43,21 @@ public class BotAIController : MonoBehaviour
         yield return new WaitForSeconds(actionCooldown);
         UpdateBotState();
         PerformBotAction();
-        yield return new WaitForSeconds(analyzeCooldown);
-        AnalyzePlayerGridAndPlaceRobots();
+        //yield return new WaitForSeconds(analyzeCooldown);
+        //AnalyzePlayerGridAndPlaceRobots();
         yield return new WaitForSeconds(probabilityCooldown);
         PlaceRobotBasedOnProbability();
         StartCoroutine(AIUpdateRoutine());
     }
     private void UpdateBotState()
     {
-        if (botBase.Life > 75)
+        float lifePercentage = (float)botBase.Life / botBase.MaxLife * 100;
+
+        if (lifePercentage > 75)
         {
             currentState = BotState.Offensive;
         }
-        else if (botBase.Life > 50)
+        else if (lifePercentage > 50)
         {
             currentState = BotState.Balanced;
         }
@@ -97,11 +99,8 @@ public class BotAIController : MonoBehaviour
             if (emptySlab != null)
             {
                 SlabController slab = emptySlab.GetComponent<SlabController>();
-                if (moneyProducer.RobotPrefab.CompareTag("SolarisSentinel"))
-                {
-                    SolarisSentinelController sentinel = moneyProducer.RobotPrefab.GetComponent<SolarisSentinelController>();
-                    sentinel.Bot = this.gameObject.GetComponent<BotAIController>();
-                }
+                Robot robot = moneyProducer.RobotPrefab.GetComponent<SolarisSentinelController>();
+                robot.Bot = this.gameObject.GetComponent<BotAIController>();
                 GameObject producer = Instantiate(moneyProducer.RobotPrefab);
                 producer.transform.position = emptySlab.transform.position;
                 Robot tmp = producer.GetComponent<Robot>();
@@ -179,6 +178,7 @@ public class BotAIController : MonoBehaviour
             }
         }
     }
+    /*
     private void AnalyzePlayerGridAndPlaceRobots()
     {
         for (int i = 0; i < playerGrid.Robots.GetLength(0); ++i)
@@ -239,6 +239,7 @@ public class BotAIController : MonoBehaviour
 
         }
     }
+    */
     private int GetCost(RobotCard robot)
     {
         return robot.Cost;

@@ -8,8 +8,29 @@ public class RhinoRampartController : Robot
     [SerializeField] private Transform targetBase;
     [SerializeField] private GameObject launchPosition;
     [SerializeField] private GameObject bullet;
-    [SerializeField] private GameGrid playerGrid;
-    [SerializeField] private GameGrid botGrid;
+    private void OnEnable()
+    {
+        if (Player != null)
+        {
+            onDestroy += PlayDeathAnimation;
+        }
+        else if (Bot != null)
+        {
+            onDestroy += PlayDeathAnimation;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (Player != null)
+        {
+            onDestroy -= PlayDeathAnimation;
+        }
+        else if (Bot != null)
+        {
+            onDestroy -= PlayDeathAnimation;
+        }
+    }
     private void Start()
     {
         if(player != null)
@@ -23,33 +44,21 @@ public class RhinoRampartController : Robot
         }
         StartCoroutine(AttackLoop());
     }
-    public GameGrid PlayerGrid
-    {
-        get 
-        { 
-            return playerGrid; 
-        }
-        set 
-        { 
-            playerGrid = value; 
-        }
-    }
-    public GameGrid BotGrid
-    {
-        get 
-        { 
-            return botGrid; 
-        }
-        set 
-        { 
-            botGrid = value; 
-        }
-    }
     public  IEnumerator AttackLoop()
     {
-        AttackBase();
-        yield return new WaitForSeconds(fireRate);
-        StartCoroutine(AttackLoop());
+        if(isDead == false)
+        {
+            StartCoroutine(PlayAnimation("Attack", 3));
+            yield return new WaitForSeconds(0.5f);
+            ParabolicMovement parabolicComponent = bullet.GetComponent<ParabolicMovement>();
+            parabolicComponent.TargetObject = targetBase;
+            Bullet bulletComponent = bullet.GetComponent<Bullet>();
+            bulletComponent.SetDamage(damage);
+            GameObject projectile = Instantiate(bullet, launchPosition.transform.position, Quaternion.identity);
+            yield return new WaitForSeconds(fireRate);
+            StartCoroutine(AttackLoop());
+        }
+
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -59,14 +68,5 @@ public class RhinoRampartController : Robot
             TakeDamage(bullet.Damage);
         }
     }
-    private void AttackBase()
-    {
-        ParabolicMovement parabolicComponent = bullet.GetComponent<ParabolicMovement>();
-        parabolicComponent.TargetObject = targetBase;
-        Bullet bulletComponent = bullet.GetComponent<Bullet>();
-        bulletComponent.SetDamage(damage);
-        GameObject projectile = Instantiate(bullet, launchPosition.transform.position, Quaternion.identity);
-    }
-
 }
 

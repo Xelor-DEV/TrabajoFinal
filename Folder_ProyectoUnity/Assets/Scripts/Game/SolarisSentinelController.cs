@@ -11,11 +11,13 @@ public class SolarisSentinelController : Robot
         if (Player != null)
         {
             onMoneyGenerated += player.AddMoney;
+            onDestroy += PlayDeathAnimation;
         }
         else if (Bot != null)
         {
             onMoneyGenerated += Bot.AddMoney;
             onDestroy += Bot.MoneyProducerEliminated;
+            onDestroy += PlayDeathAnimation;
         }
     }
 
@@ -24,11 +26,13 @@ public class SolarisSentinelController : Robot
         if (Player != null)
         {
             onMoneyGenerated -= player.AddMoney;
+            onDestroy -= PlayDeathAnimation;
         }
         else if (Bot != null)
         {
             onMoneyGenerated -= bot.AddMoney;
             onDestroy -= bot.MoneyProducerEliminated;
+            onDestroy -= PlayDeathAnimation;
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -46,8 +50,12 @@ public class SolarisSentinelController : Robot
 
     private IEnumerator GenerateMoneyRoutine()
     {
-        yield return new WaitForSeconds(generateMoneyInterval);
-        onMoneyGenerated?.Invoke(moneyPerInterval);
-        StartCoroutine(GenerateMoneyRoutine());
+        if(isDead == false)
+        {
+            yield return new WaitForSeconds(generateMoneyInterval);
+            onMoneyGenerated?.Invoke(moneyPerInterval);
+            StartCoroutine(PlayAnimation("Money Generated", 1));
+            StartCoroutine(GenerateMoneyRoutine());
+        }
     }
 }

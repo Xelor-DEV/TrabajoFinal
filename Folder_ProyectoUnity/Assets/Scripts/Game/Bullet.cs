@@ -27,9 +27,18 @@ public class Bullet : MonoBehaviour
             }
             else
             {
+                Robot robot = other.GetComponent<Robot>();
+                if (robot.IsDead == false)
+                {
+                    StartCoroutine(robot.PlayAnimation("Hit", 0.5f));
+                }
                 Destroy(gameObject);
             }
             
+        }
+        else if (other.CompareTag("Base"))
+        {
+            Destroy(gameObject);
         }
     }
 }

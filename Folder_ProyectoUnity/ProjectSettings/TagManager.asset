@@ -9,6 +9,7 @@ TagManager:
   - Bullet
   - RhinoRampart
   - BeetleBlaster
+  - Base
   layers:
   - Default
   - TransparentFX

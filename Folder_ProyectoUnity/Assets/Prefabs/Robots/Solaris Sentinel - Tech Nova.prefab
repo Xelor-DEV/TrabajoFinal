@@ -323,6 +323,8 @@ MonoBehaviour:
   maxLife: 0
   damage: 0
   player: {fileID: 0}
+  animator: {fileID: 0}
+  deathDuration: 0.7
   bot: {fileID: 0}
   generateMoneyInterval: 5
   moneyPerInterval: 10

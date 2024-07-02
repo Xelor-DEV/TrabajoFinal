@@ -10,8 +10,7 @@ public class PlayerController : MonoBehaviour
     [Header("References")]
     [SerializeField] private UIManager uiManager;
     [SerializeField] private PlayerInventory inventory;
-	[SerializeField] private GameGrid playerGrid;
-    [SerializeField] private GameGrid botGrid;
+	[SerializeField] private GameGrid grid;
     [SerializeField] private Camera playerCamera;
     [SerializeField] private Base playerBase;
     [SerializeField] private BaseController botBase;
@@ -141,13 +140,13 @@ public class PlayerController : MonoBehaviour
                 if (hitInfo.collider != null && hitInfo.collider.tag == "Slab")
                 {
                     SlabController slab = hitInfo.collider.gameObject.GetComponent<SlabController>();
-                    if (playerGrid.Robots[slab.XIndex, slab.YIndex] == null)
+                    if (grid.Robots[slab.XIndex, slab.YIndex] == null)
                     {
                         currentRobot.layer = originalLayer;
                         Robot tmp = currentRobot.GetComponent<Robot>();
-                        playerGrid.Robots[slab.XIndex, slab.YIndex] = tmp;
+                        grid.Robots[slab.XIndex, slab.YIndex] = tmp;
                         tmp.SetData(currentData);
-                        currentRobot.transform.position = playerGrid.Slabs[slab.XIndex, slab.YIndex].transform.position;
+                        currentRobot.transform.position = grid.Slabs[slab.XIndex, slab.YIndex].transform.position;
                         isRobotPlace = true;
                         currentData = null;
                         currentRobot = null;
@@ -223,13 +222,6 @@ public class PlayerController : MonoBehaviour
             currentData = currentRobot;
             Robot robot = currentData.RobotPrefab.GetComponent<Robot>();
             robot.Player = this.gameObject.GetComponent<PlayerController>();
-            if (currentData.RobotPrefab.CompareTag("RhinoRampart") == true) 
-            {
-                RhinoRampartController rhino = currentData.RobotPrefab.GetComponent<RhinoRampartController>();
-                rhino.Player = this.gameObject.GetComponent<PlayerController>();
-                rhino.PlayerGrid = playerGrid;
-                rhino.BotGrid = botGrid;
-            }
             this.currentRobot = Instantiate(currentRobot.RobotPrefab, hitInfo.point, currentRobot.RobotPrefab.transform.rotation);
             established = true;
             return established;

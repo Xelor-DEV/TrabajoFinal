@@ -5,38 +5,72 @@ using UnityEngine;
 public class ParabolicMovement : MonoBehaviour
 {
     [SerializeField] private Transform targetObject;
+    [SerializeField] private float launchAngle = 45f;
     [SerializeField] private float speed;
     [SerializeField] private float gravity;
     private Vector3 initialPosition;
-    private float timeElapsed;
+    private Vector3 targetPosition;
+    private Vector3 velocity;
+    private bool hasInitialized = false;
     public Transform TargetObject
     {
-        get 
-        { 
-            return targetObject; 
+        get
+        {
+            return targetObject;
         }
-        set 
-        { 
-            targetObject = value; 
+        set
+        {
+            targetObject = value;
         }
     }
     private void Start()
     {
+        if (targetObject != null)
+        {
+            InitializeProjectile();
+        }
+    }
+    private void InitializeProjectile()
+    {
         initialPosition = transform.position;
-        timeElapsed = 0f;
+        targetPosition = targetObject.position;
+
+        Vector3 direction = targetPosition - initialPosition;
+        float distance = direction.magnitude;
+        float heightDifference = direction.y;
+        direction.y = 0;
+        float horizontalDistance = direction.magnitude;
+
+        float angle = launchAngle * Mathf.Deg2Rad;
+        float v0 = Mathf.Sqrt(horizontalDistance * gravity / Mathf.Sin(2 * angle));
+        float v0x = v0 * Mathf.Cos(angle);
+        float v0y = v0 * Mathf.Sin(angle);
+
+        Vector3 horizontalDirection = direction.normalized;
+        velocity = horizontalDirection * v0x;
+        velocity.y = v0y;
+
+        hasInitialized = true;
     }
     private void Update()
     {
-        Vector3 targetPosition = targetObject.position;
-        Vector3 horizontalDirection = targetPosition - initialPosition;
-        float horizontalDistance = horizontalDirection.magnitude;
-        float timeOfFlight = (2f * speed * Mathf.Sin(Mathf.PI / 4f)) / gravity;
-        timeElapsed = timeElapsed + Time.deltaTime;
-        float horizontalVelocity = speed * Mathf.Cos(Mathf.PI / 4f);
-        float currentX = initialPosition.x + horizontalVelocity * timeElapsed;
-        float currentY = initialPosition.y + (speed * Mathf.Sin(Mathf.PI / 4f) - 0.5f * gravity * timeElapsed * timeElapsed);
-        float currentZ = initialPosition.z + horizontalDirection.normalized.z * horizontalDistance;
-        transform.position = new Vector3(currentX, currentY, currentZ);
+        if (hasInitialized == false)
+        {
+            if (targetObject != null)
+            {
+                InitializeProjectile();
+            }
+            else
+            {
+                return;
+            }
+        }
+
+        float timeStep = Time.deltaTime;
+        velocity.y -= gravity * timeStep;
+        Vector3 displacement = velocity * timeStep;
+
+        transform.position += displacement;
     }
 }
 

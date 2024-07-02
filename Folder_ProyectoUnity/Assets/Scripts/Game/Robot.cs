@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using System;
 public class Robot : MonoBehaviour
 {
@@ -7,6 +8,46 @@ public class Robot : MonoBehaviour
     [SerializeField] protected int damage;
     public Action onDestroy;
     [SerializeField] protected PlayerController player;
+    [SerializeField] protected Animator animator;
+    [SerializeField] protected float deathDuration;
+    protected bool isDead = false;
+    public bool IsDead
+    {
+        get
+        {
+            return isDead;
+        }
+    }
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
+    public IEnumerator PlayAnimation(string name, float duration)
+    {
+        animator.CrossFade(name, 0.1f);
+        yield return new WaitForSeconds(duration);
+        animator.CrossFade("Idle", 0.1f);
+    }
+    protected void PlayDeathAnimation()
+    {
+        StartCoroutine(DeathAnimation());
+    }
+    protected IEnumerator DeathAnimation()
+    {
+        gameObject.layer = LayerMask.NameToLayer("Ignore");
+        animator.CrossFade("Death", deathDuration);
+        yield return new WaitForSeconds(2.5f);
+        while (isDead == true)
+        {
+            Destroy(this.gameObject);
+            yield return null;
+
+            if (this == null)
+            {
+                break;
+            }
+        }
+    }
     public int Life
     {
         get
@@ -16,10 +57,10 @@ public class Robot : MonoBehaviour
         set
         {
             life = value;
-            if (life <= 0)
+            if (life <= 0 && isDead == false)
             {
+                isDead = true;
                 onDestroy?.Invoke();
-                Destroy(gameObject);
             }
         }
     }

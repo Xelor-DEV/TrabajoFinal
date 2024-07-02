@@ -319,10 +319,10 @@ MonoBehaviour:
   maxLife: 0
   damage: 0
   player: {fileID: 0}
+  animator: {fileID: 0}
+  deathDuration: 0.45
   bot: {fileID: 0}
   fireRate: 5
   targetBase: {fileID: 0}
   launchPosition: {fileID: 1959053886056131549}
   bullet: {fileID: 5704193192157931881, guid: 703e4bd332a320c4ab952af50b3237e5, type: 3}
-  playerGrid: {fileID: 0}
-  botGrid: {fileID: 0}

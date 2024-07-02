@@ -834,7 +834,7 @@ MonoBehaviour:
   win: {fileID: 1324531858}
   lose: {fileID: 1316719351}
   money: {fileID: 908076049}
-  offset: 0
+  offset: 1080
   duration: 1
   ease: 17
   masterSlider: {fileID: 2007848551}
@@ -1760,26 +1760,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  money: 20
+  money: 100
   botBase: {fileID: 11400000, guid: d38882e605b9e1543a02c1adcae9a9ce, type: 2}
   baseController: {fileID: 1780945697}
   offensiveRobots:
   - {fileID: 11400000, guid: c2940175bcdd6d44ba82fef234aa3b38, type: 2}
-  - {fileID: 11400000, guid: 252e9babedc8abb49abf43a29f9b9141, type: 2}
   defensiveRobots:
-  - {fileID: 11400000, guid: 252e9babedc8abb49abf43a29f9b9141, type: 2}
-  - {fileID: 11400000, guid: 6c2a60cce14846e46a792956bacfece8, type: 2}
+  - {fileID: 11400000, guid: c2940175bcdd6d44ba82fef234aa3b38, type: 2}
   balancedRobots:
-  - {fileID: 11400000, guid: 8dbb83fb616651747b34577b40f274ab, type: 2}
-  - {fileID: 11400000, guid: f160403ea327c434abba2d2954c0f657, type: 2}
-  - {fileID: 11400000, guid: 6c2a60cce14846e46a792956bacfece8, type: 2}
+  - {fileID: 11400000, guid: c2940175bcdd6d44ba82fef234aa3b38, type: 2}
   moneyProducer: {fileID: 11400000, guid: 3a4182197f59cc74ab93df7cd75ff3d2, type: 2}
   botGrid: {fileID: 465436958}
   playerGrid: {fileID: 1487235737}
   playerBase: {fileID: 1871884155}
-  actionCooldown: 10
-  analyzeCooldown: 15
-  probabilityCooldown: 20
+  actionCooldown: 1
+  analyzeCooldown: 1
+  probabilityCooldown: 1
   maxMoneyProducers: 5
   robotPlacementProbability: 0.3
   currentMoneyProducers: 0
@@ -1792,7 +1788,7 @@ Transform:
   m_GameObject: {fileID: 465436957}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.139229, y: -266.84476, z: 191.24615}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1859,12 +1855,17 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 80c661cb02625034fb0f6a7156c2fe49,
         type: 3}
       propertyPath: m_Name
-      value: PlayerBase (1)
+      value: PlayerBase
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 80c661cb02625034fb0f6a7156c2fe49,
         type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 80c661cb02625034fb0f6a7156c2fe49,
+        type: 3}
+      propertyPath: m_TagString
+      value: Base
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1950,6 +1951,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f7a33e2a9f72ea14487205fff5a9f4fd,
+        type: 3}
+      propertyPath: m_TagString
+      value: Base
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4851,7 +4857,7 @@ AudioSource:
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
-  Mute: 0
+  Mute: 1
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
@@ -5110,8 +5116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiManager: {fileID: 279911386}
   inventory: {fileID: 1487235736}
-  playerGrid: {fileID: 1487235737}
-  botGrid: {fileID: 465436958}
+  grid: {fileID: 1487235737}
   playerCamera: {fileID: 330585545}
   playerBase: {fileID: 11400000, guid: 4751c0c54ee96504a9515d113ee504b2, type: 2}
   botBase: {fileID: 1780945697}
@@ -5119,7 +5124,7 @@ MonoBehaviour:
   cameraRotationSpeed: 50
   screenDistanceDetection: 0.05
   speed: 10
-  money: 30
+  money: 1000
   currentData: {fileID: 0}
   currentRobot: {fileID: 0}
   slabLayer:
