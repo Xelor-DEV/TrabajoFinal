@@ -12,4 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 947a9d5f56bd1c944b0247341a857a79, type: 3}
   m_Name: RhinoRampart
   m_EditorClassIdentifier: 
-  nodes: []
+  nodes:
+  - value: 0
+    parentValue: 0
+    cost: 0
+  - value: 170
+    parentValue: 0
+    cost: 50
+  - value: 40
+    parentValue: 0
+    cost: 60
+  - value: 190
+    parentValue: 170
+    cost: 80
+  - value: 30
+    parentValue: 40
+    cost: 70
+  - value: 25
+    parentValue: 40
+    cost: 90

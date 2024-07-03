@@ -35,9 +35,9 @@ public class GameGrid : MonoBehaviour
     }
     void GenerateSlabs()
     {
-        for (int i = 0; i < length; i++)
+        for (int i = 0; i < length; ++i)
         {
-            for (int j = 0; j < width; j++)
+            for (int j = 0; j < width; ++j)
             {
                 Vector3 position = new Vector3(startPosition.position.x + (spacingX * j), startPosition.position.y, startPosition.position.z + (spacingY * i));
                 GameObject slab = Instantiate(slabPrefab, position, slabPrefab.transform.rotation);
@@ -70,13 +70,13 @@ public class GameGrid : MonoBehaviour
         int emptyCount = 0;
         GameObject emptySlab = null;
 
-        for (int i = 0; i < length; i++)
+        for (int i = 0; i < length; ++i)
         {
-            for (int j = 0; j < width; j++)
+            for (int j = 0; j < width; ++j)
             {
                 if (robots[i, j] == null)
                 {
-                    emptyCount++;
+                    emptyCount = emptyCount + 1;
                     if (Random.Range(0, emptyCount) == 0)
                     {
                         emptySlab = slabs[i, j];
@@ -92,11 +92,11 @@ public class GameGrid : MonoBehaviour
         int emptyCount = 0;
         GameObject emptySlab = null;
 
-        for (int j = 0; j < width; j++)
+        for (int j = 0; j < width; ++j)
         {
             if (robots[rowIndex, j] == null)
             {
-                emptyCount++;
+                emptyCount = emptyCount + 1;
                 if (Random.Range(0, emptyCount) == 0)
                 {
                     emptySlab = slabs[rowIndex, j];

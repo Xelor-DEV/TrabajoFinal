@@ -14,7 +14,7 @@ public class RobotGenerator : MonoBehaviour
     [SerializeField] private TMP_Text upgradeValue;
     [SerializeField] private TMP_Text leftOption;
     [SerializeField] private TMP_Text rightOption;
-    [SerializeField] private GameObject choicePanel;
+    [SerializeField] private TMP_Text generationText;
     private Timer timer;
     private bool isGenerating = false;
     private bool isFirstUpdate = true;
@@ -24,6 +24,7 @@ public class RobotGenerator : MonoBehaviour
         upgrades = upgradeTree.GetBinaryTree();
         timer.OnTimerUpdate += UpdateProgressBar;
         timer.OnTimerComplete += GenerateRobot;
+        generationText.text = "Generate " + card.RobotName + " \n Cost: " + card.Cost;
         FirstUpgradeOptions();
     }
     private void Update()
@@ -72,7 +73,7 @@ public class RobotGenerator : MonoBehaviour
                         card.Life = currentUpgrade;
                         if (isFirstUpdate == true)
                         {
-                            upgradeType.text = "Vidas";
+                            upgradeType.text = "Robot Life Upgrades";
                             isFirstUpdate = false;
                         }
                         upgradeValue.text = currentUpgrade.ToString();
@@ -83,7 +84,7 @@ public class RobotGenerator : MonoBehaviour
                         card.GenerationTime = currentUpgrade;
                         if (isFirstUpdate == true)
                         {
-                            upgradeType.text = "Tiempo de Generación";
+                            upgradeType.text = "Upgrades in the generation time of robot cards";
                             isFirstUpdate = false;
                         }
                         upgradeValue.text = currentUpgrade.ToString();
@@ -91,10 +92,6 @@ public class RobotGenerator : MonoBehaviour
                         UpdateTimeUpgradeOptions();
                     }
                 }
-            }
-            else
-            {
-                Debug.Log("No tienes suficiente dinero para esta mejora.");
             }
         }
         catch (Exception e)
@@ -107,21 +104,21 @@ public class RobotGenerator : MonoBehaviour
         try
         {
             int leftUpgrade = upgrades.GetChildByFather(currentUpgrade, true);
-            leftOption.text = "Vida: " + leftUpgrade + " Costo: " + upgradeTree.GetUpgradeCost(leftUpgrade);
+            leftOption.text = "Life Upgrade: " + leftUpgrade + " Cost: " + upgradeTree.GetUpgradeCost(leftUpgrade);
         }
         catch
         {
-            leftOption.text = "No disponible";
+            leftOption.text = "Not available";
         }
 
         try
         {
             int rightUpgrade = upgrades.GetChildByFather(currentUpgrade, false);
-            rightOption.text = "Tiempo: " + rightUpgrade + " Costo: " + upgradeTree.GetUpgradeCost(rightUpgrade);
+            rightOption.text = "Generation Time Upgrade: " + rightUpgrade + " Cost: " + upgradeTree.GetUpgradeCost(rightUpgrade);
         }
         catch
         {
-            rightOption.text = "No disponible";
+            rightOption.text = "Not available";
         }
     }
     private void UpdateLifeUpgradeOptions()
@@ -129,7 +126,7 @@ public class RobotGenerator : MonoBehaviour
         try
         {
             int leftUpgrade = upgrades.GetChildByFather(currentUpgrade, true);
-            leftOption.text = "Vida: " + leftUpgrade + " Costo: " + upgradeTree.GetUpgradeCost(leftUpgrade);
+            leftOption.text = "Life Upgrade: " + leftUpgrade + " Costo: " + upgradeTree.GetUpgradeCost(leftUpgrade);
         }
         catch
         {
@@ -139,11 +136,11 @@ public class RobotGenerator : MonoBehaviour
         try
         {
             int rightUpgrade = upgrades.GetChildByFather(currentUpgrade, false);
-            rightOption.text = "Vida: " + rightUpgrade + " Costo: " + upgradeTree.GetUpgradeCost(rightUpgrade);
+            rightOption.text = "Life Upgrade: " + rightUpgrade + " Costo: " + upgradeTree.GetUpgradeCost(rightUpgrade);
         }
         catch
         {
-            rightOption.text = "No disponible";
+            rightOption.text = "Not available";
         }
     }
 
@@ -152,21 +149,21 @@ public class RobotGenerator : MonoBehaviour
         try
         {
             int leftUpgrade = upgrades.GetChildByFather(currentUpgrade, true);
-            leftOption.text = "Tiempo: " + leftUpgrade + " Costo: " + upgradeTree.GetUpgradeCost(leftUpgrade);
+            leftOption.text = "Generation Time Upgrade: " + leftUpgrade + " Cost: " + upgradeTree.GetUpgradeCost(leftUpgrade);
         }
         catch
         {
-            leftOption.text = "No disponible";
+            leftOption.text = "Not available";
         }
 
         try
         {
             int rightUpgrade = upgrades.GetChildByFather(currentUpgrade, false);
-            rightOption.text = "Tiempo: " + rightUpgrade + " Costo: " + upgradeTree.GetUpgradeCost(rightUpgrade);
+            rightOption.text = "Generation Time Upgrade: " + rightUpgrade + " Cost: " + upgradeTree.GetUpgradeCost(rightUpgrade);
         }
         catch
         {
-            rightOption.text = "No disponible";
+            rightOption.text = "Not available";
         }
     }
 
