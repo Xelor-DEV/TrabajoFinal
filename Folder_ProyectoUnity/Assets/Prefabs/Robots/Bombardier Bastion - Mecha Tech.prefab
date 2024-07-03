@@ -299,15 +299,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05a1bd60bf8b1d14393b27bbf81def88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 0
-  maxLife: 0
-  damage: 0
+  life: 100
+  maxLife: 100
+  damage: 20
   player: {fileID: 0}
+  animator: {fileID: 0}
+  deathDuration: 0
   bot: {fileID: 0}
   attackThreshold: 0.6
   bullet: {fileID: 366382696581821812, guid: f99f7ba238c709d409bbe724821812bb, type: 3}
   attackInterval: 5
-  shotsBeforeDamageIncrease: 2
+  shotsBeforeDamageIncrease: 4
   scaleDuration: 2
   ease: 25
   plusDamage: 10

@@ -313,6 +313,8 @@ MonoBehaviour:
   maxLife: 0
   damage: 0
   player: {fileID: 0}
+  animator: {fileID: 0}
+  deathDuration: 0
   bot: {fileID: 0}
   bullet: {fileID: 8309738495972824853, guid: a6ec3a1670d704643be982bed1644077, type: 3}
-  bulletInterval: 5
+  bulletInterval: 3

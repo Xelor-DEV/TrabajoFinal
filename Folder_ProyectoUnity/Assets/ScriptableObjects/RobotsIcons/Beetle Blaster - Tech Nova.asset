@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   robotIcon: {fileID: 21300000, guid: 8037846a055540d4fb6dcc8314561057, type: 3}
   robotName: Beetle Blaster
-  life: 40
-  damage: 5
+  life: 80
+  damage: 15
   robotPrefab: {fileID: 5107418953101289581, guid: d76faffd9055b084db786c8ecfc14920,
     type: 3}
-  cost: 40
+  cost: 80
+  generationTime: 20

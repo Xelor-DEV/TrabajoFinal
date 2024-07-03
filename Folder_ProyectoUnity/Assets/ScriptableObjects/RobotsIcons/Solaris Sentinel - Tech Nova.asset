@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   robotIcon: {fileID: 21300000, guid: 7d4df7ce5cb31af45be00641ce26f601, type: 3}
   robotName: Solaris Sentinel
-  life: 30
+  life: 100
   damage: 0
   robotPrefab: {fileID: 4419595462729494338, guid: 079186cbfc08bd0469fe12775fd4f0a9,
     type: 3}
-  cost: 20
+  cost: 50
+  generationTime: 10

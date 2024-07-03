@@ -48,7 +48,7 @@ public class RhinoRampartController : Robot
     {
         if(isDead == false)
         {
-            StartCoroutine(PlayAnimation("Attack", 3));
+            StartCoroutine(PlayAnimation("isAttacking", 2));
             yield return new WaitForSeconds(0.5f);
             ParabolicMovement parabolicComponent = bullet.GetComponent<ParabolicMovement>();
             parabolicComponent.TargetObject = targetBase;

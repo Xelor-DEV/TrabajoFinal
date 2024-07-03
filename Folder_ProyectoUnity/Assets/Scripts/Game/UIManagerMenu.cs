@@ -68,6 +68,7 @@ public class UIManagerMenu : MonoBehaviour
     }
     private void Start()
     {
+        Time.timeScale = 1;
         if (skipSplashScreen == true)
         {
             OnVideoStarted(splashScreen);

@@ -26,6 +26,7 @@ public class GoliathGuardianController : Robot
         {
             Bullet proyectile = bullet.gameObject.GetComponent<Bullet>();
             TakeDamage(proyectile.Damage);
+            StartCoroutine(PlayAnimation("isHit", 0.5f));
             Destroy(bullet);
         }
     }

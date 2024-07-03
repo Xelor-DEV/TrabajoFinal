@@ -12,7 +12,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Base botBase;
     [SerializeField] private Slider playerLife;
     [SerializeField] private Slider botLife;
-    [SerializeField] private TMP_Text time;
     [SerializeField] private RectTransform win;
     [SerializeField] private RectTransform lose;
     [SerializeField] private TMP_Text money;
@@ -71,6 +70,7 @@ public class UIManager : MonoBehaviour
     }
     private void Start()
     {
+        Time.timeScale = 1;
         playerLife.maxValue = playerBase.MaxLife;
         botLife.maxValue = botBase.MaxLife;
         UpdatePlayerLifeBar(playerBase.Life);

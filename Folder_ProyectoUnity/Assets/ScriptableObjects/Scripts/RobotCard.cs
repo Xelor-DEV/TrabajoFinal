@@ -75,4 +75,16 @@ public class RobotCard : ScriptableObject
             cost = value;
         }
     }
+    [SerializeField] private int generationTime;
+    public int GenerationTime
+    {
+        get
+        {
+            return generationTime;
+        }
+        set
+        {
+            generationTime = value;
+        }
+    }
 }

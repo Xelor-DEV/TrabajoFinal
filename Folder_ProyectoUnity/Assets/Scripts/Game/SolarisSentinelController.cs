@@ -54,7 +54,7 @@ public class SolarisSentinelController : Robot
         {
             yield return new WaitForSeconds(generateMoneyInterval);
             onMoneyGenerated?.Invoke(moneyPerInterval);
-            StartCoroutine(PlayAnimation("Money Generated", 1));
+            StartCoroutine(PlayAnimation("isMoneyGenerated", 1));
             StartCoroutine(GenerateMoneyRoutine());
         }
     }

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: PlayerBase
   m_EditorClassIdentifier: 
   maxLife: 10000
-  life: 5380
+  life: 9940

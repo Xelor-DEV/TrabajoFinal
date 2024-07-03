@@ -326,7 +326,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   deathDuration: 0.7
   bot: {fileID: 0}
-  generateMoneyInterval: 5
+  generateMoneyInterval: 3
   moneyPerInterval: 10
 --- !u!1001 &5863892180361315064
 PrefabInstance:

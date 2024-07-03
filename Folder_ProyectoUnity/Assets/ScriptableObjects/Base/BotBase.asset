@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: BotBase
   m_EditorClassIdentifier: 
   maxLife: 10000
-  life: 9705
+  life: 1

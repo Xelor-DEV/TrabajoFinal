@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 public class BinaryTree<T>
 {
     private Node root;
@@ -69,23 +68,49 @@ public class BinaryTree<T>
         }
         return fatherNode;
     }
-    public void InDepthSearch()
+    private Node SearchNode(T value)
     {
         Queue<Node> queue = new Queue<Node>();
         queue.Enqueue(root);
         Node currentNode = null;
-        while(queue.Count > 0)
+        while (queue.Count > 0)
         {
             currentNode = queue.DequeueAndGet();
-            Debug.Log(currentNode.Value);
-            if(currentNode.LeftChild != null)
+            dynamic tmp = currentNode.Value;
+            if (tmp == value)
+            {
+                return currentNode;
+            }
+            if (currentNode.LeftChild != null)
             {
                 queue.Enqueue(currentNode.LeftChild);
             }
             if (currentNode.RightChild != null)
             {
-                queue.Enqueue(currentNode.RightChild); 
+                queue.Enqueue(currentNode.RightChild);
             }
         }
+        return null;
+    }
+    public T GetChildByFather(T father, bool isLeft)
+    {
+        Node currentNode = SearchNode(father);
+        if (currentNode == null)
+        {
+            throw new Exception("Current upgrade not found in the tree.");
+        }
+        if (isLeft == true && currentNode.LeftChild != null)
+        {
+            currentNode = currentNode.LeftChild;
+        }
+        else if (isLeft == false && currentNode.RightChild != null)
+        {
+            currentNode = currentNode.RightChild;
+        }
+        else
+        {
+            throw new Exception("Invalid direction or no child in that direction.");
+        }
+        return currentNode.Value;
     }
 }

@@ -24,9 +24,9 @@ public class Robot : MonoBehaviour
     }
     public IEnumerator PlayAnimation(string name, float duration)
     {
-        animator.CrossFade(name, 0.1f);
+        animator.SetBool(name,true);
         yield return new WaitForSeconds(duration);
-        animator.CrossFade("Idle", 0.1f);
+        animator.SetBool(name,false);
     }
     protected void PlayDeathAnimation()
     {
@@ -35,18 +35,9 @@ public class Robot : MonoBehaviour
     protected IEnumerator DeathAnimation()
     {
         gameObject.layer = LayerMask.NameToLayer("Ignore");
-        animator.CrossFade("Death", deathDuration);
+        animator.SetTrigger("isDeath");
         yield return new WaitForSeconds(2.5f);
-        while (isDead == true)
-        {
-            Destroy(this.gameObject);
-            yield return null;
-
-            if (this == null)
-            {
-                break;
-            }
-        }
+        Destroy(this.gameObject);
     }
     public int Life
     {

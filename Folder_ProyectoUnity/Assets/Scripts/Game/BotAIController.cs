@@ -20,7 +20,6 @@ public class BotAIController : MonoBehaviour
     [SerializeField] private GameGrid playerGrid;
     [SerializeField] private BaseController playerBase;
     [SerializeField] private float actionCooldown;
-    [SerializeField] private float analyzeCooldown;
     [SerializeField] private float probabilityCooldown;
     [SerializeField] private int maxMoneyProducers;
     [SerializeField] private float robotPlacementProbability;
@@ -43,8 +42,6 @@ public class BotAIController : MonoBehaviour
         yield return new WaitForSeconds(actionCooldown);
         UpdateBotState();
         PerformBotAction();
-        //yield return new WaitForSeconds(analyzeCooldown);
-        //AnalyzePlayerGridAndPlaceRobots();
         yield return new WaitForSeconds(probabilityCooldown);
         PlaceRobotBasedOnProbability();
         StartCoroutine(AIUpdateRoutine());
@@ -178,68 +175,6 @@ public class BotAIController : MonoBehaviour
             }
         }
     }
-    /*
-    private void AnalyzePlayerGridAndPlaceRobots()
-    {
-        for (int i = 0; i < playerGrid.Robots.GetLength(0); ++i)
-        {
-            int enemyCount = 0;
-            int nonSolarisSentinelCount = 0;
-            for (int j = 0; j < playerGrid.Robots.GetLength(1); ++j)
-            {
-                if (playerGrid.Robots[i, j] != null)
-                {
-                    enemyCount++;
-                    if (playerGrid.Robots[i, j].CompareTag("SolarisSentinel") == false)
-                    {
-                        nonSolarisSentinelCount++;
-                    }
-                }
-            }
-            if (enemyCount > 3)
-            {
-                PlaceRobotInRow(defensiveRobots, i);
-            }
-            else if (nonSolarisSentinelCount < 2)
-            {
-                PlaceRobotInRow(offensiveRobots, i);
-            }
-            else
-            {
-                PlaceRobotInRow(balancedRobots, i);
-            }
-        }
-    }
-    private void PlaceRobotInRow(RobotCard[] robots, int rowIndex)
-    {
-        int randomIndex = Random.Range(0, robots.Length);
-        RobotCard robot = robots[randomIndex];
-
-        if (money >= GetCost(robot))
-        {
-            if (money - GetCost(robot) < GetCost(moneyProducer) && currentMoneyProducers < maxMoneyProducers)
-            {
-                PlaceMoneyProducer();
-            }
-            else
-            {
-                GameObject emptySlab = botGrid.GetRandomEmptyPositionInRow(rowIndex);
-                if (emptySlab != null)
-                {
-                    SlabController slab = emptySlab.GetComponent<SlabController>();
-                    Robot tmp = robot.RobotPrefab.GetComponent<Robot>();
-                    tmp.Bot = this.gameObject.GetComponent<BotAIController>();
-                    GameObject placedRobot = Instantiate(robot.RobotPrefab);
-                    placedRobot.transform.position = emptySlab.transform.position;
-                    botGrid.Robots[slab.XIndex, slab.YIndex] = tmp;
-                    tmp.SetData(robot);
-                    money = money - GetCost(robot);
-                }
-            }
-
-        }
-    }
-    */
     private int GetCost(RobotCard robot)
     {
         return robot.Cost;
