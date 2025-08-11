@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   robotIcon: {fileID: 21300000, guid: f6fcef896aaa53646874628fad8228df, type: 3}
   robotName: Rhino Rampart
-  life: 150
-  damage: 25
+  life: 85
+  damage: 18
   robotPrefab: {fileID: 4478495403235295578, guid: 87061fe33b5c88d408bef6b156fafb35,
     type: 3}
-  cost: 120
-  generationTime: 50
+  cost: 280
+  generationTime: 45

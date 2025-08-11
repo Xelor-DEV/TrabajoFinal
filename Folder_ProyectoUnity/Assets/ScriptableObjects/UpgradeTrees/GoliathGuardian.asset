@@ -16,15 +16,15 @@ MonoBehaviour:
   - value: 0
     parentValue: 0
     cost: 0
-  - value: 250
+  - value: 100
     parentValue: 0
-    cost: 60
+    cost: 40
   - value: 30
     parentValue: 0
-    cost: 50
+    cost: 35
+  - value: 110
+    parentValue: 100
+    cost: 60
   - value: 20
     parentValue: 30
-    cost: 70
-  - value: 10
-    parentValue: 30
-    cost: 120
+    cost: 50

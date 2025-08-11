@@ -87,4 +87,33 @@ public class RobotCard : ScriptableObject
             generationTime = value;
         }
     }
+
+    [Header("Default Card")]
+    [SerializeField] private RobotCard defaultCard;
+
+    public RobotCard DefaultCard
+    {
+        get
+        {
+            return defaultCard;
+        }
+        set
+        {
+            defaultCard = value;
+        }
+    }
+
+    public void ResetToDefault()
+    {
+        if (defaultCard != null)
+        {
+            robotIcon = defaultCard.robotIcon;
+            robotName = defaultCard.robotName;
+            life = defaultCard.life;
+            damage = defaultCard.damage;
+            robotPrefab = defaultCard.robotPrefab;
+            cost = defaultCard.cost;
+            generationTime = defaultCard.generationTime;
+        }
+    }
 }

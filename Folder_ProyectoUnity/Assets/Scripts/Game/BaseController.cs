@@ -2,6 +2,11 @@ using UnityEngine;
 public class BaseController : MonoBehaviour
 {
     [SerializeField] private Base thisBase;
+    private void Start()
+    {
+        thisBase.Life = thisBase.MaxLife;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Bullet")

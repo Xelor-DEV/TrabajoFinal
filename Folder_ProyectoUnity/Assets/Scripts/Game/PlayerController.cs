@@ -152,6 +152,8 @@ public class PlayerController : MonoBehaviour
                         currentRobot = null;
                         _leftClick = false;
                         originalLayer = -1;
+
+                        tmp.StartBehavior();
                     }
                 }
             }
@@ -221,7 +223,7 @@ public class PlayerController : MonoBehaviour
         {
             currentData = currentRobot;
             Robot robot = currentData.RobotPrefab.GetComponent<Robot>();
-            robot.Player = this.gameObject.GetComponent<PlayerController>();
+            robot.Player = this;
             this.currentRobot = Instantiate(currentRobot.RobotPrefab, hitInfo.point, currentRobot.RobotPrefab.transform.rotation);
             established = true;
             return established;

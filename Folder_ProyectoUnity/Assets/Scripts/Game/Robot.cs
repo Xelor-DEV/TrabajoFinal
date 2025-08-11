@@ -22,11 +22,9 @@ public class Robot : MonoBehaviour
     {
         animator = GetComponent<Animator>();
     }
-    public IEnumerator PlayAnimation(string name, float duration)
+    public void PlayAnimation(string name)
     {
-        animator.SetBool(name,true);
-        yield return new WaitForSeconds(duration);
-        animator.SetBool(name,false);
+        animator.SetTrigger(name);
     }
     protected void PlayDeathAnimation()
     {
@@ -39,7 +37,7 @@ public class Robot : MonoBehaviour
         yield return new WaitForSeconds(2.5f);
         Destroy(this.gameObject);
     }
-    public int Life
+    public virtual int Life
     {
         get
         {
@@ -55,6 +53,19 @@ public class Robot : MonoBehaviour
             }
         }
     }
+
+    public int MaxLife
+    {
+        get
+        {
+            return maxLife;
+        }
+        set
+        {
+            maxLife = value;
+        }
+    }
+
     public PlayerController Player
     {
         get
@@ -88,7 +99,8 @@ public class Robot : MonoBehaviour
     {
         Life = Life - damage;
     }
-    public virtual void StartBehavior(bool isPlace)
+
+    public virtual void StartBehavior()
     {
 
     }

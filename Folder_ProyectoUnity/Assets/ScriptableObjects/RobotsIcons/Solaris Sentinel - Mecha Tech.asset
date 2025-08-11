@@ -18,5 +18,5 @@ MonoBehaviour:
   damage: 0
   robotPrefab: {fileID: 5716355983823369447, guid: 8397ab77bbbd17a49804fc5ca8e53b1c,
     type: 3}
-  cost: 50
-  generationTime: 10
+  cost: 60
+  generationTime: 15

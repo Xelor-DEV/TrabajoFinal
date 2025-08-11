@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+
 public class BinaryTree<T>
 {
     private Node root;
@@ -55,12 +57,11 @@ public class BinaryTree<T>
     }
     private Node SearchFather(T value)
     {
-        dynamic fatherValue = value;
         Node fatherNode = null;
         Node[] allNodesTmp = allNodes.ListToArray();
         for(int i = 0; i < allNodesTmp.Length; ++i)
         {
-            if(fatherValue == allNodesTmp[i].Value)
+            if (EqualityComparer<T>.Default.Equals(value, allNodesTmp[i].Value))
             {
                 fatherNode = allNodes.GetNodeByPosition(i);
                 break;
@@ -76,8 +77,8 @@ public class BinaryTree<T>
         while (queue.Count > 0)
         {
             currentNode = queue.DequeueAndGet();
-            dynamic tmp = currentNode.Value;
-            if (tmp == value)
+
+            if (EqualityComparer<T>.Default.Equals(value, currentNode.Value))
             {
                 return currentNode;
             }

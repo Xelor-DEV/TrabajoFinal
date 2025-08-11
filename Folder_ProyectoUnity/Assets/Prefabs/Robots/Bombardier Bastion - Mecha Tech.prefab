@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6377141325866506265
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2203145645289064960}
+  m_Layer: 7
+  m_Name: ProjectileSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2203145645289064960
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6377141325866506265}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.24, z: 0.098}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3081378068572839717}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &6996811198222407770
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16,17 +47,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 5c5c6f5f970461545a25e0412ce5bd57,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 2.1074831
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5c5c6f5f970461545a25e0412ce5bd57,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.7400002
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5c5c6f5f970461545a25e0412ce5bd57,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.044549465
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5c5c6f5f970461545a25e0412ce5bd57,
         type: 3}
@@ -249,7 +280,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 5465940246521907071, guid: 5c5c6f5f970461545a25e0412ce5bd57,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2203145645289064960}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5c5c6f5f970461545a25e0412ce5bd57,
         type: 3}
@@ -260,6 +295,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1557534930647156571}
   m_SourcePrefab: {fileID: 100100000, guid: 5c5c6f5f970461545a25e0412ce5bd57, type: 3}
+--- !u!4 &3081378068572839717 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5465940246521907071, guid: 5c5c6f5f970461545a25e0412ce5bd57,
+    type: 3}
+  m_PrefabInstance: {fileID: 6996811198222407770}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &7915291192966292747 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5c5c6f5f970461545a25e0412ce5bd57,
@@ -286,7 +327,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 2, z: 1}
-  m_Center: {x: 0, y: 0.1, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &1557534930647156571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,13 +340,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05a1bd60bf8b1d14393b27bbf81def88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 100
-  maxLife: 100
-  damage: 20
+  life: 180
+  maxLife: 180
+  damage: 35
   player: {fileID: 0}
   animator: {fileID: 0}
   deathDuration: 0
   bot: {fileID: 0}
+  spawnPoint: {fileID: 2203145645289064960}
   attackThreshold: 0.6
   bullet: {fileID: 366382696581821812, guid: f99f7ba238c709d409bbe724821812bb, type: 3}
   attackInterval: 5

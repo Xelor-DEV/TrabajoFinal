@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3935fed9ddc99c041bb63a3d33b7b417, type: 3}
   m_Name: Beetle Blaster - Tech Nova
   m_EditorClassIdentifier: 
-  robotIcon: {fileID: 21300000, guid: 8037846a055540d4fb6dcc8314561057, type: 3}
+  robotIcon: {fileID: 21300000, guid: 464e155ad5163844c8419641f5880c71, type: 3}
   robotName: Beetle Blaster
-  life: 80
-  damage: 15
+  life: 55
+  damage: 8
   robotPrefab: {fileID: 5107418953101289581, guid: d76faffd9055b084db786c8ecfc14920,
     type: 3}
-  cost: 80
+  cost: 110
   generationTime: 20
+  defaultCard: {fileID: 11400000, guid: 89abb0fba23d27042bb94f5fb6176abd, type: 2}

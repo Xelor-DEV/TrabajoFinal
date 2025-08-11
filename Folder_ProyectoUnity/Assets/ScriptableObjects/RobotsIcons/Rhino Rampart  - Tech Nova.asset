@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3935fed9ddc99c041bb63a3d33b7b417, type: 3}
   m_Name: Rhino Rampart  - Tech Nova
   m_EditorClassIdentifier: 
-  robotIcon: {fileID: 21300000, guid: f6fcef896aaa53646874628fad8228df, type: 3}
+  robotIcon: {fileID: 21300000, guid: 2007188e8777b9d4ca25c86704522d8d, type: 3}
   robotName: Rhino Rampart
-  life: 150
-  damage: 25
+  life: 100
+  damage: 20
   robotPrefab: {fileID: 4600315254801081160, guid: 75fc904a95af0594492fd2462c02d0e0,
     type: 3}
-  cost: 120
-  generationTime: 50
+  cost: 320
+  generationTime: 65
+  defaultCard: {fileID: 11400000, guid: 51d2fe7a345497c44ba39af910a163f2, type: 2}

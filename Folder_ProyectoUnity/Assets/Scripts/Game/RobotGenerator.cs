@@ -24,7 +24,7 @@ public class RobotGenerator : MonoBehaviour
         upgrades = upgradeTree.GetBinaryTree();
         timer.OnTimerUpdate += UpdateProgressBar;
         timer.OnTimerComplete += GenerateRobot;
-        generationText.text = "Generate " + card.RobotName + " \n Cost: " + card.Cost;
+        generationText.text = "Generate " + card.RobotName + " \n Cost: " + card.Cost+ " \n Generation Time: " + card.GenerationTime;
         FirstUpgradeOptions();
     }
     private void Update()

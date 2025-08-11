@@ -16,17 +16,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 04b03f046e7f01a4bb6ae8a9d31bcfc1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1.2687759
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 04b03f046e7f01a4bb6ae8a9d31bcfc1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.29
+      value: 1.7399998
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 04b03f046e7f01a4bb6ae8a9d31bcfc1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.21
+      value: -1.8034477
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 04b03f046e7f01a4bb6ae8a9d31bcfc1,
         type: 3}
@@ -295,7 +295,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.43, y: 2.17, z: 1}
-  m_Center: {x: 0, y: 0.18, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &9015626769122308621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,10 +308,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7afe72b50058c0e428dd0df82829cf0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 0
-  maxLife: 0
+  life: 200
+  maxLife: 200
   damage: 0
   player: {fileID: 0}
+  animator: {fileID: 0}
+  deathDuration: 0
   bot: {fileID: 0}
   parryProbability: 0.5
 --- !u!4 &6921884120155392196 stripped

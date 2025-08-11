@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RhinoRampartController : Robot
@@ -8,29 +7,32 @@ public class RhinoRampartController : Robot
     [SerializeField] private Transform targetBase;
     [SerializeField] private GameObject launchPosition;
     [SerializeField] private GameObject bullet;
-    private void OnEnable()
+
+    public override int Life
     {
-        if (Player != null)
+        get
         {
-            onDestroy += PlayDeathAnimation;
+            return life;
         }
-        else if (Bot != null)
+        set
         {
-            onDestroy += PlayDeathAnimation;
+            life = value;
+            if (life <= 0 && isDead == false)
+            {
+                isDead = true;
+                if (Player != null)
+                {
+                    PlayDeathAnimation();
+                }
+                else if (Bot != null)
+                {
+                    bot.OnRobotDestroyed(this);
+                    PlayDeathAnimation();
+                }
+            }
         }
     }
 
-    private void OnDisable()
-    {
-        if (Player != null)
-        {
-            onDestroy -= PlayDeathAnimation;
-        }
-        else if (Bot != null)
-        {
-            onDestroy -= PlayDeathAnimation;
-        }
-    }
     private void Start()
     {
         if(player != null)
@@ -42,13 +44,17 @@ public class RhinoRampartController : Robot
             targetBase = bot.PlayerBase.transform;
             
         }
+    }
+
+    public override void StartBehavior()
+    {
         StartCoroutine(AttackLoop());
     }
     public  IEnumerator AttackLoop()
     {
         if(isDead == false)
         {
-            StartCoroutine(PlayAnimation("isAttacking", 2));
+            PlayAnimation("isAttacking");
             yield return new WaitForSeconds(0.5f);
             ParabolicMovement parabolicComponent = bullet.GetComponent<ParabolicMovement>();
             parabolicComponent.TargetObject = targetBase;

@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3935fed9ddc99c041bb63a3d33b7b417, type: 3}
   m_Name: Solaris Sentinel - Tech Nova
   m_EditorClassIdentifier: 
-  robotIcon: {fileID: 21300000, guid: 7d4df7ce5cb31af45be00641ce26f601, type: 3}
+  robotIcon: {fileID: 21300000, guid: 01e8953b500397f4c91e7d9e118e380b, type: 3}
   robotName: Solaris Sentinel
-  life: 60
+  life: 65
   damage: 0
   robotPrefab: {fileID: 4419595462729494338, guid: 079186cbfc08bd0469fe12775fd4f0a9,
     type: 3}
-  cost: 50
-  generationTime: 10
+  cost: 70
+  generationTime: 25
+  defaultCard: {fileID: 11400000, guid: 7fac8dd80c793334c9682831fef5e92c, type: 2}

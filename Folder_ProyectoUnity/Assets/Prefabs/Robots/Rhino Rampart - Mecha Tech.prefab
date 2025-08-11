@@ -16,17 +16,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 45a79e6610320224aab9f4432b51c71d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.15546036
+      value: 0.7253463
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 45a79e6610320224aab9f4432b51c71d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.7400002
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 45a79e6610320224aab9f4432b51c71d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.394436
+      value: -3.6653378
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 45a79e6610320224aab9f4432b51c71d,
         type: 3}
@@ -302,7 +302,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 2.58, z: 1}
-  m_Center: {x: 0, y: 0.25, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &2948246309146963633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,9 +315,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c6bfc121ee2d2f409f745e9be2cc39c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  life: 60
-  maxLife: 60
-  damage: 20
+  life: 150
+  maxLife: 150
+  damage: 25
   player: {fileID: 0}
   animator: {fileID: 0}
   deathDuration: 0.45

@@ -6,35 +6,37 @@ public class SolarisSentinelController : Robot
     [SerializeField] private float generateMoneyInterval;
     [SerializeField] private int moneyPerInterval;
     public event Action<int> onMoneyGenerated;
-    private void OnEnable()
+
+    public override int Life
     {
-        if (Player != null)
+        get
         {
-            onMoneyGenerated += player.AddMoney;
-            onDestroy += PlayDeathAnimation;
+            return life;
         }
-        else if (Bot != null)
+        set
         {
-            onMoneyGenerated += Bot.AddMoney;
-            onDestroy += Bot.MoneyProducerEliminated;
-            onDestroy += PlayDeathAnimation;
+            life = value;
+            if (life <= 0 && isDead == false)
+            {
+                isDead = true;
+                if (Player != null)
+                {
+                    PlayDeathAnimation();
+                }
+                else if (Bot != null)
+                {
+                    bot.MoneyProducerEliminated();
+                    PlayDeathAnimation();
+                }
+            }
         }
     }
 
-    private void OnDisable()
+    public override void StartBehavior()
     {
-        if (Player != null)
-        {
-            onMoneyGenerated -= player.AddMoney;
-            onDestroy -= PlayDeathAnimation;
-        }
-        else if (Bot != null)
-        {
-            onMoneyGenerated -= bot.AddMoney;
-            onDestroy -= bot.MoneyProducerEliminated;
-            onDestroy -= PlayDeathAnimation;
-        }
+        StartCoroutine(GenerateMoneyRoutine());
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Bullet")
@@ -43,10 +45,6 @@ public class SolarisSentinelController : Robot
             TakeDamage(bullet.Damage);
         }
     }
-    private void Start()
-    {
-        StartCoroutine(GenerateMoneyRoutine());
-    }
 
     private IEnumerator GenerateMoneyRoutine()
     {
@@ -54,7 +52,16 @@ public class SolarisSentinelController : Robot
         {
             yield return new WaitForSeconds(generateMoneyInterval);
             onMoneyGenerated?.Invoke(moneyPerInterval);
-            StartCoroutine(PlayAnimation("isMoneyGenerated", 1));
+            if (Player != null)
+            {
+                player.AddMoney(moneyPerInterval);
+            }
+            else if (Bot != null)
+            {
+                bot.AddMoney(moneyPerInterval);
+            }
+
+            PlayAnimation("isMoneyGenerated");
             StartCoroutine(GenerateMoneyRoutine());
         }
     }

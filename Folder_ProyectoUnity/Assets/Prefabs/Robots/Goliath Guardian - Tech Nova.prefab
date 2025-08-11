@@ -16,17 +16,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: fe9c8a3444c240240ae1fec3769ea082,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -3.57301
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fe9c8a3444c240240ae1fec3769ea082,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.54
+      value: 1.7399998
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fe9c8a3444c240240ae1fec3769ea082,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -2.5570593
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fe9c8a3444c240240ae1fec3769ea082,
         type: 3}
@@ -325,7 +325,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.43, y: 2.17, z: 1}
-  m_Center: {x: 0, y: 0.18, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &-9088305594929859113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,6 +342,8 @@ MonoBehaviour:
   maxLife: 0
   damage: 0
   player: {fileID: 0}
+  animator: {fileID: 0}
+  deathDuration: 0
   bot: {fileID: 0}
   parryProbability: 0.5
 --- !u!4 &5572425178949344044 stripped

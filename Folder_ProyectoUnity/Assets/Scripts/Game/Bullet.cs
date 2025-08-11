@@ -30,7 +30,7 @@ public class Bullet : MonoBehaviour
                 Robot robot = other.GetComponent<Robot>();
                 if (robot.IsDead == false)
                 {
-                    StartCoroutine(robot.PlayAnimation("isHit", 0.5f));
+                    robot.PlayAnimation("isHit");
                 }
                 Destroy(this.gameObject);
             }

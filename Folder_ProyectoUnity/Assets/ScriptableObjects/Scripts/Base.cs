@@ -18,6 +18,10 @@ public class Base : ScriptableObject
         {
             return life;
         }
+        set
+        {
+            life = value;
+        }
     }
     public Action<int> onBaseAttacked;
     public Action onBaseDestroyed;

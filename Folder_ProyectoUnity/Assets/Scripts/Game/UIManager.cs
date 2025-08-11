@@ -15,7 +15,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private RectTransform win;
     [SerializeField] private RectTransform lose;
     [SerializeField] private TMP_Text money;
-    [SerializeField] private float offset;
+    [SerializeField] private RectTransform startPos;
     [SerializeField] private float duration;
     [SerializeField] private Ease ease;
     [Header("Music Sliders")]
@@ -46,11 +46,11 @@ public class UIManager : MonoBehaviour
 
     public void ShowWin()
     {
-        win.DOAnchorPosY(win.anchoredPosition.y - offset, duration).SetEase(ease).OnComplete(() => Time.timeScale = 0);
+        win.DOAnchorPos(startPos.anchoredPosition, duration).SetEase(ease).OnComplete(() => Time.timeScale = 0);
     }
     public void ShowLose()
     {
-        lose.DOAnchorPosY(lose.anchoredPosition.y - offset, duration).SetEase(ease).OnComplete(() => Time.timeScale = 0);
+        lose.DOAnchorPos(startPos.anchoredPosition, duration).SetEase(ease).OnComplete(() => Time.timeScale = 0);
     }
     private void OnEnable()
     {

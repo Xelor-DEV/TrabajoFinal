@@ -4,6 +4,7 @@ using DG.Tweening;
 using UnityEngine.Video;
 using UnityEngine.InputSystem;
 using System;
+using System.Collections;
 public class UIManagerMenu : MonoBehaviour
 {
     [Header("References")]
@@ -18,17 +19,21 @@ public class UIManagerMenu : MonoBehaviour
     [SerializeField] private GameObject transitionTarget;
     [SerializeField] private float duration;
     [SerializeField] private Ease ease;
-    [SerializeField] private bool transitionEnded = false;
+    [SerializeField] private bool initialCinematicEnded = false; // Cambiado de transitionEnded
     private bool isTransitioning = false;
     [SerializeField] private bool skipSplashScreen;
-    [Header("Buttons, Windows and Logo Hide/Show Properties")]
-    [SerializeField] private float offsetX_Button;
-    [SerializeField] private float offsetY_Windows;
-    [SerializeField] private float offsetY_Logo;
+    [Header("Target Positions")]
+    [SerializeField] private RectTransform buttonsShownPos;
+    [SerializeField] private RectTransform buttonsHiddenPos;
+    [SerializeField] private RectTransform logoShownPos;
+    [SerializeField] private RectTransform logoHiddenPos;
+    [SerializeField] private RectTransform windowsShownPos;
+    [SerializeField] private RectTransform windowsHiddenPos;
     [Header("Music Sliders")]
     [SerializeField] private Slider masterSlider;
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
+    private bool isInitialCinematicActive = false; // Nueva variable para rastrear el estado
     public Slider MasterSlider
     {
         get
@@ -51,7 +56,7 @@ public class UIManagerMenu : MonoBehaviour
         }
     }
     public event Action<int> OnWindowShow;
-    public  event Action OnWindowHide;
+    public event Action OnWindowHide;
     private void OnEnable()
     {
         splashScreen.started += OnVideoStarted;
@@ -71,74 +76,140 @@ public class UIManagerMenu : MonoBehaviour
         Time.timeScale = 1;
         if (skipSplashScreen == true)
         {
-            OnVideoStarted(splashScreen);
-            OnVideoEnded(splashScreen);
+            StartCoroutine(SkipSplashScreenRoutine());
         }
         else
         {
-            splashScreen.Play();
+            // Iniciamos la preparación del video
+            StartCoroutine(PrepareAndPlayVideo());
         }
+
+        HideButtons();
+        HideLogo();
     }
+
+    private IEnumerator PrepareAndPlayVideo()
+    {
+        isInitialCinematicActive = true;
+
+        // Preparar el video antes de reproducir
+        splashScreen.Prepare();
+
+        // Esperar hasta que el video esté preparado
+        while (!splashScreen.isPrepared)
+        {
+            yield return null;
+        }
+
+        // Reproducir video y audio simultáneamente
+        splashScreen.Play();
+        AudioManager.Instance.PlayMusic(0);
+    }
+
+    private IEnumerator SkipSplashScreenRoutine()
+    {
+        // Saltar la cinemática pero asegurar la carga
+        splashScreen.Prepare();
+
+        // Esperar preparación incluso al saltar
+        while (!splashScreen.isPrepared)
+        {
+            yield return null;
+        }
+
+        // Forzar el final de la cinemática
+        OnVideoStarted(splashScreen);
+        OnVideoEnded(splashScreen);
+    }
+
     private void OnVideoStarted(VideoPlayer vp)
     {
         Destroy(blackScreen);
-        AudioManager.Instance.PlayMusic(0);
     }
     private void OnVideoEnded(VideoPlayer vp)
     {
+        isInitialCinematicActive = false; // La cinemática terminó naturalmente
         Transition(splashScreen.gameObject, true);
     }
-    public void GoMenu(InputAction.CallbackContext context)
+    public void SkipOrGoToMenu(InputAction.CallbackContext context)
     {
-        if (context.performed == true && isTransitioning == false && transitionEnded == true)
+        if (!context.performed || isTransitioning) return;
+
+        // Saltar cinemática inicial si está activa
+        if (isInitialCinematicActive)
         {
-            transitionEnded = false;
+            SkipInitialCinematic();
+            return;
+        }
+
+        // Comportamiento original si ya pasó la cinemática
+        if (initialCinematicEnded)
+        {
+            initialCinematicEnded = false;
             Transition(startScreen, false);
         }
     }
+
+    private void SkipInitialCinematic()
+    {
+        // Detener y limpiar elementos de la cinemática
+        splashScreen.Stop();
+
+        if (blackScreen != null)
+        {
+            Destroy(blackScreen);
+        }
+
+        isInitialCinematicActive = false; // Marcar como inactiva
+
+        // Forzar la transición a menú principal
+        Transition(splashScreen.gameObject, true);
+    }
+
     public void Transition(GameObject objectToDestroy, bool isSplashScreen)
     {
-        if (isTransitioning == false) 
-        {
-            isTransitioning = true;
-            Vector3 initialPosition = transition.transform.position;
-            AudioManager.Instance.PlaySfx(2);
-            transition.transform.DOMove(transitionTarget.transform.position, duration).SetEase(ease).OnComplete(() =>
-            {
-                Destroy(objectToDestroy);
-                AudioManager.Instance.PlaySfx(1);
+        if (isTransitioning) return;
 
-                transition.transform.DOMove(initialPosition, duration).SetEase(ease).OnComplete(() =>
+        isTransitioning = true;
+        Vector3 initialPosition = transition.transform.position;
+        AudioManager.Instance.PlaySfx(2);
+
+        transition.transform.DOMove(transitionTarget.transform.position, duration).SetEase(ease).OnComplete(() =>
+        {
+            Destroy(objectToDestroy);
+            AudioManager.Instance.PlaySfx(1);
+
+            transition.transform.DOMove(initialPosition, duration).SetEase(ease).OnComplete(() =>
+            {
+                if (isSplashScreen)
                 {
-                    if (isSplashScreen == true)
-                    {
-                        transitionEnded = true;
-                    }
-                    else
-                    {
-                        ShowButtons();
-                        ShowLogo();
-                    }
-                    isTransitioning = false;
-                });
+                    initialCinematicEnded = true; // Actualizado a nuevo nombre
+                }
+                else
+                {
+                    ShowButtons();
+                    ShowLogo();
+                }
+                isTransitioning = false;
             });
-        }
+        });
     }
+
     public void HideLogo()
     {
-        logo.DOAnchorPosY(logo.anchoredPosition.y + offsetY_Logo, duration).SetEase(ease);
+        logo.DOAnchorPos(logoHiddenPos.anchoredPosition, duration).SetEase(ease);
     }
     public void ShowLogo()
     {
-        logo.DOAnchorPosY(logo.anchoredPosition.y - offsetY_Logo, duration).SetEase(ease);
+        logo.DOAnchorPos(logoShownPos.anchoredPosition, duration).SetEase(ease);
     }
     public void HideButtons()
     {
-        buttons.DOAnchorPosX(buttons.anchoredPosition.x - offsetX_Button, duration).SetEase(ease);
+        buttons.DOAnchorPos(buttonsHiddenPos.anchoredPosition, duration).SetEase(ease);
     }
     public void ShowButtons()
     {
-        buttons.DOAnchorPosX(buttons.anchoredPosition.x + offsetX_Button, duration).SetEase(ease);
+        buttons.DOAnchorPos(buttonsShownPos.anchoredPosition, duration).SetEase(ease);
     }
     public void ShowWindow(int index)
     {
@@ -146,7 +217,7 @@ public class UIManagerMenu : MonoBehaviour
         {
             HideButtons();
             HideLogo();
-            windows[index].DOAnchorPosY(windows[index].anchoredPosition.y - offsetY_Windows, duration).SetEase(ease);
+            windows[index].DOAnchorPos(windowsShownPos.anchoredPosition, duration).SetEase(ease);
             OnWindowShow?.Invoke(index);
         }
     }
@@ -154,7 +225,7 @@ public class UIManagerMenu : MonoBehaviour
     {
         if (index >= 0 && index < windows.Length)
         {
-            windows[index].DOAnchorPosY(windows[index].anchoredPosition.y + offsetY_Windows, duration).SetEase(ease);
+            windows[index].DOAnchorPos(windowsHiddenPos.anchoredPosition, duration).SetEase(ease);
             OnWindowHide?.Invoke();
         }
     }
